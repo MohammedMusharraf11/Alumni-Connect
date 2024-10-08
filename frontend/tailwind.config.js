@@ -8,7 +8,8 @@ export default {
     extend: {
       colors:{
         'primary':'#FF8403',
-        'secondary':'#022F74'
+        'secondary':'#022F74',
+        'custom-blue': '#EAEFFF'
       },
       fontFamily: {
         outfit: ['Outfit', 'sans-serif'],
