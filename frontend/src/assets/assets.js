@@ -6,6 +6,8 @@ import Icon02 from './icon-02.png';
 import Icon03 from './icon-03.png';
 import Icon04 from './icon-04.png';
 import Icon05 from './icon-05.png';
+import Student from './student.png';
+import Alumni from './alumni.png';
 
 export const assets = {
   Logo,
@@ -15,5 +17,7 @@ export const assets = {
   Icon02,
   Icon03,
   Icon04,
-  Icon05
+  Icon05,
+  Student,
+  Alumni
 };
