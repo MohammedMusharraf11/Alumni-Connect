@@ -13,7 +13,7 @@ function Navbar() {
   const hideButtons = hiddenButtonPaths.includes(location.pathname);
 
   return (
-    <div className='flex items-center justify-between text-sm py-4 mb-5 border-b border-b-grey-400 font-outfit'>
+    <div className='sticky top-0 bg-white z-50 flex items-center justify-between text-sm py-4 mb-5 border-b border-b-grey-400 font-outfit'>
       <img className='w-44 cursor-pointer' src={assets.Logo} alt="" />
       <ul className={`md:flex items-center gap-10 font-medium text-secondary ${hideButtons ? 'justify-center w-full' : ''}`}>
         <NavLink to={'/'}>
