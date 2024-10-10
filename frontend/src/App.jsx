@@ -6,6 +6,8 @@ import Contact from './pages/Contact'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import RoleSelection from './pages/RoleSelection'
+import StudentReg from './pages/StudentReg'
+import Login from './pages/Login'
 
 function App() {
   return (
@@ -15,7 +17,9 @@ function App() {
         <Route path='/' element={<Home />} />
         <Route path='/about' element={<About />} />
         <Route path='/contact' element={<Contact />} />
+        <Route path='/login' element={<Login />} />
         <Route path='/roleselection' element={<RoleSelection />} />
+        <Route path='/student-register' element={<StudentReg />} />
         </Routes>
         <Footer/>
     </div>
