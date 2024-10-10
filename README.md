@@ -94,6 +94,4 @@ Whether you’re here to contribute code, suggest improvements, or provide feedb
 
 **Happy Coding!** ✨
 
----
 
-**Repository Link**: [Alumni Connect GitHub Repository](https://github.com/MohammedMusharraf11/Alumni-Connect)
