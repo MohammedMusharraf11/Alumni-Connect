@@ -3,37 +3,58 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { loginValidation } = require('../Middlewares/AuthValidation');
 
+const { validationResult } = require("express-validator");
+
+
 const signup = async (req, res) => {
     try {
-        // Check if the user already exists
-        const existingUser = await User.findOne({ collegeEmail: req.body.collegeEmail });
-        if (existingUser) {
-            return res.status(400).json({ message: 'User already exists' });
+        // Destructure the required fields from the request body
+        const { fullName, collegeEmail, password, confirmPassword, graduationYear, course, fieldOfStudy, github, linkedin, usn } = req.body;
+
+        // Check if a user with the given college email already exists
+        const user = await User.findOne({ collegeEmail });
+        if (user) {
+            return res.status(409).json({
+                message: 'User already exists, you can log in',
+                success: false
+            });
         }
 
-        // Encrypt the password
-        const salt = await bcrypt.genSalt(10);
-        const hashedPassword = await bcrypt.hash(req.body.password, salt);
+        // Ensure passwords match
+        if (password !== confirmPassword) {
+            return res.status(400).json({
+                message: "Passwords do not match",
+                success: false
+            });
+        }
 
-        // Create a new user
-        const user = new User({
-            fullName: req.body.fullName,
-            graduationYear: req.body.graduationYear,
-            collegeEmail: req.body.collegeEmail,
-            course: req.body.course,
-            usn: req.body.usn,
-            fieldOfStudy: req.body.fieldOfStudy,
-            linkedin: req.body.linkedin,
-            github: req.body.github,
-            password: hashedPassword
+        // Create a new user model instance
+        const userModel = new User({
+            fullName,
+            collegeEmail,
+            password: await bcrypt.hash(password, 10), // Hash the password
+            graduationYear,
+            course,
+            fieldOfStudy,
+            github,
+            linkedin,
+            usn
         });
 
-        // Save the user in the database
-        await user.save();
-        res.status(201).json({ message: 'User created successfully' });
+        // Save the new user to the database
+        await userModel.save();
 
-    } catch (error) {
-        return res.status(500).json({ message: error.message });
+        // Respond with success message
+        res.status(201).json({
+            message: "Signup successful",
+            success: true
+        });
+    } catch (err) {
+        console.error(err); // Log any errors for debugging
+        res.status(500).json({
+            message: "Internal server error",
+            success: false
+        });
     }
 };
 
@@ -49,7 +70,7 @@ const login = async (req, res) => {
         if (!validPassword) return res.status(400).json({ message: errorMessage, success: false });
 
         const jwtToken = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-        res.status(200).json({ message: 'Login successful', token: jwtToken, success: true });
+        res.status(200).json({ message: 'Login successful', token: jwtToken, success: true, fullname: user.fullName });
 
     } catch (error) {
         return res.status(500).json({ message: error.message });

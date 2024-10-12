@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-
+import { handleError,handleSuccess } from '../utils/utils';
+import { ToastContainer } from 'react-toastify';
 function StudentReg() {
   
-  const [formData, setFormData] = useState({
+  const [signUp, setsignUp] = useState({
     fullName: '',
     graduationYear: '',
     collegeEmail: '',
@@ -17,25 +18,68 @@ function StudentReg() {
     confirmPassword: '',
     profilePhoto: null,
   });
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
+    setsignUp({
+      ...signUp,
       [e.target.name]: e.target.value,
     });
   };
 
   const handleFileChange = (e) => {
-    setFormData({
-      ...formData,
+    setsignUp({
+      ...signUp,
       profilePhoto: e.target.files[0],
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     // Handle form submission here (e.g., send data to server)
-    console.log(formData);
+    console.log(signUp);
+    const { fullName, graduationYear, collegeEmail, course, usn, fieldOfStudy, linkedin, github, password, confirmPassword, profilePhoto } = signUp;
+    
+    if(!fullName || !graduationYear || !collegeEmail || !course || !usn || !fieldOfStudy || !password || !confirmPassword ){
+      handleError('Please fill all the fields');
+      return;
+    }
+    if(password !== confirmPassword){
+      handleError('Passwords do not match');
+      return;
+    }
+    try {
+      const url = 'http://localhost:8080/auth/signup';
+      const respose = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(signUp),
+      });
+      const result = await respose.json();
+      const {success,message ,error} = result;
+      if(success){
+        handleSuccess(message);
+        setTimeout(() => {
+          navigate('/login');
+        },1000);
+        }else if(error){
+          const details = error?.details[0]?.message;
+          handleError(details);
+          
+      }else if(!success){
+        handleError(message);
+      }
+      console.log(result);
+      
+
+      
+    } catch (error) {
+      handleError(error.message);
+    }
+    
+
   };
 
   const years = Array.from({ length: 50 }, (_, i) => 2024 + i);
@@ -51,11 +95,11 @@ function StudentReg() {
             type="text"
             id="fullName"
             name="fullName"
-            value={formData.fullName}
+            value={signUp.fullName}
             onChange={handleChange}
             placeholder="Enter your full name"
             className="border rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500"
-            required
+            
           />
         </div>
         <div className="flex flex-col">
@@ -63,10 +107,10 @@ function StudentReg() {
           <select
             id="graduationYear"
             name="graduationYear"
-            value={formData.graduationYear}
+            value={signUp.graduationYear}
             onChange={handleChange}
             className="border rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500"
-            required
+            
           >
             <option value="">Select your graduation year</option>
             {years.map((year) => (
@@ -82,11 +126,11 @@ function StudentReg() {
             type="email"
             id="collegeEmail"
             name="collegeEmail"
-            value={formData.collegeEmail}
+            value={signUp.collegeEmail}
             onChange={handleChange}
             placeholder="Enter your college email"
             className="border rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500"
-            required
+            
           />
         </div>
         <div className="flex flex-col">
@@ -95,11 +139,11 @@ function StudentReg() {
             type="text"
             id="course"
             name="course"
-            value={formData.course}
+            value={signUp.course}
             onChange={handleChange}
             placeholder="Enter your course"
             className="border rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500"
-            required
+            
           />
         </div>
         <div className="flex flex-col">
@@ -108,11 +152,11 @@ function StudentReg() {
             type="text"
             id="usn"
             name="usn"
-            value={formData.usn}
+            value={signUp.usn}
             onChange={handleChange}
             placeholder="Enter your USN"
             className="border rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500"
-            required
+            
           />
         </div>
         <div className="flex flex-col">
@@ -121,11 +165,11 @@ function StudentReg() {
             type="text"
             id="fieldOfStudy"
             name="fieldOfStudy"
-            value={formData.fieldOfStudy}
+            value={signUp.fieldOfStudy}
             onChange={handleChange}
             placeholder="Enter your field of study"
             className="border rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500"
-            required
+            
           />
         </div>
         <div className="flex flex-col">
@@ -134,7 +178,7 @@ function StudentReg() {
             type="url"
             id="linkedin"
             name="linkedin"
-            value={formData.linkedin}
+            value={signUp.linkedin}
             onChange={handleChange}
             placeholder="Enter your LinkedIn profile URL"
             className="border rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500"
@@ -146,7 +190,7 @@ function StudentReg() {
             type="url"
             id="github"
             name="github"
-            value={formData.github}
+            value={signUp.github}
             onChange={handleChange}
             placeholder="Enter your GitHub profile URL"
             className="border rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500"
@@ -158,11 +202,11 @@ function StudentReg() {
             type="password"
             id="password"
             name="password"
-            value={formData.password}
+            value={signUp.password}
             onChange={handleChange}
             placeholder="Enter your password"
             className="border rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500"
-            required
+            
           />
         </div>
         <div className="flex flex-col">
@@ -171,11 +215,11 @@ function StudentReg() {
             type="password"
             id="confirmPassword"
             name="confirmPassword"
-            value={formData.confirmPassword}
+            value={signUp.confirmPassword}
             onChange={handleChange}
             placeholder="Confirm your password"
             className="border rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500"
-            required
+            
           />
         </div>
         <div className="flex flex-col">
@@ -198,6 +242,7 @@ function StudentReg() {
       {/* <button onClick={()=>navigate('/roleselection')} className='bg-primary font-outfit text-white px-10 py-3 rounded-full font-light hidden md:block hover:bg-orange-600 transition'>Create Account</button> */}
         <p className="text-gray-700">Have an Account? <Link to="/login" className="text-blue-500 hover:underline">Login</Link></p>
       </div>
+      <ToastContainer />
     </div>
   );
 }

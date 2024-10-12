@@ -8,17 +8,20 @@ import Footer from './components/Footer'
 import RoleSelection from './pages/RoleSelection'
 import StudentReg from './pages/StudentReg'
 import Login from './pages/Login'
-
+import { ToastContainer } from 'react-toastify';
+import Dashboard from './pages/Dashboard'
 function App() {
   return (
     <div className='mx-4 sm:mx-[10%]'>
       <Navbar/>
+      <ToastContainer />
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/about' element={<About />} />
         <Route path='/contact' element={<Contact />} />
         <Route path='/login' element={<Login />} />
         <Route path='/roleselection' element={<RoleSelection />} />
+        <Route path='/dashboard' element={<Dashboard />} />
         <Route path='/student-register' element={<StudentReg />} />
         </Routes>
         <Footer/>
