@@ -56,7 +56,7 @@ const signupValidation = (req, res, next) => {
       details: error.details.map((detail) => detail.message),
     });
   }
-
+next();
   // Proceed to the next middleware if validation passed
 
 };
