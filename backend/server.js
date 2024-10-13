@@ -7,6 +7,11 @@ const AuthRouter = require('./Routes/AuthRouter');
 
 require('./Models/db');
 
+const corsOptions = {
+    origin: 'https://alumni-connect-backend.netlify.app',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true, // Enable if you're using cookies/auth tokens
+  };
 
 
 const PORT = process.env.PORT || 8080;
@@ -17,7 +22,7 @@ app.get('/', (req, res) => {
 });
 
 app.use(bodyParser.json());
-app.use(cors());
+app.use(cors(corsOptions));
 app.use('/auth', AuthRouter);
 
 
