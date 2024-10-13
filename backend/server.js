@@ -4,27 +4,26 @@ const app = express();
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const AuthRouter = require('./Routes/AuthRouter');
-
+const path = require('path');
 require('./Models/db');
 
-const corsOptions = {
-    origin: 'https://alumni-connect-backend.netlify.app',
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    credentials: true, // Enable if you're using cookies/auth tokens
-  };
+
 
 
 const PORT = process.env.PORT || 8080;
+const _dirname =   path.resolve();
 
 
-app.get('/', (req, res) => {
-    res.send('Hello World');
-});
 
 app.use(bodyParser.json());
-app.use(cors(corsOptions));
+app.use(cors());
 app.use('/auth', AuthRouter);
 
+app.use(express.static(path.join(_dirname, '/frontend/dist')));
+
+app.get('*', (_, res) => {
+    res.sendFile(path.join(_dirname, 'frontend','dist','index.html'));
+});
 
 app.listen(PORT, () => {
 console.log(`Server is running on port ${PORT}`);
