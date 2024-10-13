@@ -6,7 +6,11 @@ const cors = require('cors');
 const AuthRouter = require('./Routes/AuthRouter');
 const path = require('path');
 require('./Models/db');
-
+const corsOptions = {
+    origin: 'https://alumni-connect-99.onrender.com',
+    Credentials: true,
+};
+app.use(cors(corsOptions));
 
 
 
@@ -16,7 +20,6 @@ const _dirname =   path.resolve();
 
 
 app.use(bodyParser.json());
-app.use(cors());
 app.use('/auth', AuthRouter);
 
 app.use(express.static(path.join(_dirname, '/frontend/dist')));

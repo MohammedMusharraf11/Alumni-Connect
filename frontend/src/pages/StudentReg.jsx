@@ -54,7 +54,7 @@ function StudentReg() {
       return;
     }
     try {
-      const url = 'http://localhost:8080/auth/signup';
+      const url = 'https://alumni-connect-99.onrender.com/auth/signup';
       const respose = await fetch(url, {
         method: 'POST',
         headers: {
