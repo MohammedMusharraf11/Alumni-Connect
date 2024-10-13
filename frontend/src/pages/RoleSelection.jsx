@@ -2,10 +2,14 @@ import React from 'react';
 import { assets } from '../assets/assets';
 import { Link } from 'react-router-dom'; // Assuming you're using react-router for navigation
 import { useNavigate } from 'react-router-dom';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 
 function RoleSelection() {
   const navigate = useNavigate()
   return (
+    <>
+    <Navbar/>
     <div className="container mx-auto py-16 font-outfit">
       <h2 className="text-3xl font-bold text-center mb-8 text-secondary">Select Your Role</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -28,6 +32,8 @@ function RoleSelection() {
 
       </div>
     </div>
+    <Footer/>
+    </>
   );
 }
 

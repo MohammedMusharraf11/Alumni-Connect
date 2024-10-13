@@ -3,6 +3,11 @@ import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { handleError,handleSuccess } from '../utils/utils';
 import { ToastContainer } from 'react-toastify';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
+
+
+
 function StudentReg() {
   
   const [signUp, setsignUp] = useState({
@@ -85,6 +90,8 @@ function StudentReg() {
   const years = Array.from({ length: 50 }, (_, i) => 2024 + i);
 
   return (
+    <>
+    <Navbar/>
     
     <div className="container mx-auto py-16 font-outfit">
       <h2 className="text-3xl font-bold text-center mb-8 text-primary">Student Registration</h2>
@@ -244,6 +251,8 @@ function StudentReg() {
       </div>
       <ToastContainer />
     </div>
+    <Footer/>
+    </>
   );
 }
 
