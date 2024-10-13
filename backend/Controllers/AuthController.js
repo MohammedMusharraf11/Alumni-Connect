@@ -1,5 +1,5 @@
 const User = require('../Models/users'); // Ensure you are importing User correctly
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { loginValidation } = require('../Middlewares/AuthValidation');
 
