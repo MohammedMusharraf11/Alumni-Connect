@@ -1,36 +1,43 @@
-import React from 'react'
-import { useState,useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
 import { handleSuccess } from '../utils/utils';
 import { useNavigate } from 'react-router-dom';
-
+import Sidebar from '../components/Sidebar';
 
 function Dashboard() {
     const [loggedInUser, setLoggedInUser] = useState('');
     const navigate = useNavigate();
+
     useEffect(() => {
         const user = localStorage.getItem('loggedInUser');
         if (user) {
             setLoggedInUser(user);
         }
-    }, [])
+    }, []);
+
     const handleLogout = () => {
         localStorage.removeItem('token');
         localStorage.removeItem('loggedInUser');
         handleSuccess('Logged out successfully');
         setTimeout(() => {
             navigate('/');
-        }, 1000); 
-    }
-    
-  return (
-    <div className='flex justify-center items-start font-outfit'>
-        
-      <h1>Welcome {loggedInUser}</h1>
-      <br />
-      
-      <button onClick={handleLogout} className='bg-secondary font-outfit text-white px-10 py-3 rounded-full font-light hidden md:block'>Logout</button>
-    </div>
-  )
+        }, 1000);
+    };
+
+    return (
+        <div className="flex min-h-screen">
+            {/* Sidebar */}
+            <Sidebar />
+
+            {/* Main Content */}
+            <div className="flex-1 p-8 bg-gray-100">
+                <h1 className="text-3xl font-semibold mb-4">
+                    Welcome {loggedInUser}
+                </h1>
+
+                
+            </div>
+        </div>
+    );
 }
 
 export default Dashboard;

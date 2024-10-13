@@ -3,8 +3,11 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { handleError, handleSuccess } from '../utils/utils'; // Import your utility functions
 import { ToastContainer } from 'react-toastify';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 
 function Login() {
+    
     const [loginInfo, setLoginInfo] = useState({
       collegeEmail: '',
         password: ''
@@ -57,7 +60,10 @@ function Login() {
     };
 
     return (
+        <>
+        <Navbar/>
         <div className="container mx-auto py-16 text-outfit">
+            
             <div className="max-w-md mx-auto p-8 border border-[#D4D4D4] rounded-lg shadow-lg bg-white">
                 <h3 className="text-3xl font-bold text-center text-secondary mb-4">Login</h3>
                 <p className="text-zinc-500 text-center mb-5">Please login to connect with Alumni or Students</p>
@@ -102,6 +108,8 @@ function Login() {
             </div>
             <ToastContainer />
         </div>
+        <Footer/>
+        </>
     );
 }
 
