@@ -13,7 +13,7 @@ import SupportUs from './components/SupportUs'
 import AlumniReg from './pages/AlumniReg'
 function App() {
   return (
-    <div className=''>
+    <div className='font-outfit'>
 
       <ToastContainer />
       <Routes>

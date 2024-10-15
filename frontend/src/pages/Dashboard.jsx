@@ -4,11 +4,15 @@ import { useNavigate } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import { assets } from "../assets/assets";
 import { Search } from "lucide-react";
-import Card from "../components/Card"; // Import the Card component
+import Card from "../components/Card";
+import ScheduleEventForm from "../components/ScheduleEvent"; // Import Schedule Event Form
+import HostMentorshipForm from "../components/HostMentorship"; // Import Host Mentorship Form
+import JobOpeningsForm from "../components/JobOpenings"; // Import Job Openings Form
 
 function Dashboard() {
   const [loggedInUser, setLoggedInUser] = useState("");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [activeCard, setActiveCard] = useState(""); // State to track the active card
   const navigate = useNavigate();
   const user = loggedInUser.toUpperCase();
 
@@ -34,19 +38,26 @@ function Dashboard() {
 
   const currentDate = new Date().toLocaleDateString();
 
+  const handleCardClick = (title) => {
+    setActiveCard(title); // Set the active card based on the clicked card
+  };
+
+  const handleCancelForm = () => {
+    setActiveCard(""); // Reset the active card when the form is canceled
+  };
+
   return (
     <>
       <div className="grid grid-cols-12 min-h-screen w-screen max-w-full bg-[#EDF0F7]">
-        {/* Left Sidebar (20% width) */}
+        {/* Left Sidebar */}
         <div className="col-span-2 rounded-lg min-h-full">
           <Sidebar />
         </div>
 
-        {/* Main Content Area (60% width) */}
+        {/* Main Content Area */}
         <div className="col-span-8 rounded-lg min-h-fit pt-4">
-          {/* Flex container to align items */}
+          {/* Welcome and Search Bar */}
           <div className="flex justify-between items-center gap-8 px-4">
-            {/* Left Section: Welcome and Date */}
             <div className="flex flex-col justify-center">
               <h1 className="text-3xl font-outfit font-bold text-secondary">
                 Welcome, {loggedInUser}
@@ -54,7 +65,6 @@ function Dashboard() {
               <p className="text-[#023074cd]">{currentDate}</p>
             </div>
 
-            {/* Center Section: Search Bar */}
             <div className="relative mx-auto w-96">
               <input
                 type="text"
@@ -71,32 +81,38 @@ function Dashboard() {
               title="Schedule an Event"
               description="Organize and promote alumni events."
               icon={assets.Calender}
+              onClick={() => handleCardClick("Schedule an Event")}
             />
             <Card
               title="Host a Mentorship"
               description="Offer your expertise to students and fellow alumni."
               icon={assets.ShakeHand}
+              onClick={() => handleCardClick("Host a Mentorship")}
             />
             <Card
               title="Job Openings"
               description="Share opportunities with alumni."
               icon={assets.Money}
+              onClick={() => handleCardClick("Job Openings")}
             />
           </div>
+
+          {/* Conditionally render the selected form */}
+          {activeCard === "Schedule an Event" && <ScheduleEventForm onCancel={handleCancelForm} />}
+          {activeCard === "Host a Mentorship" && <HostMentorshipForm onCancel={handleCancelForm} />}
+          {activeCard === "Job Openings" && <JobOpeningsForm onCancel={handleCancelForm} />}
         </div>
 
-        {/* Right-side Profile Section (20% width) */}
+        {/* Right-side Profile Section */}
         <div className="col-span-2 flex justify-center px-4 pt-4">
           <div className="relative flex flex-col items-center">
             <button
               onClick={toggleDropdown}
               className="flex items-center space-x-2 focus:outline-none"
             >
-              <span className="font-outfit font-bold text-secondary">
-                {user}
-              </span>
+              <span className="font-outfit font-bold text-secondary">{user}</span>
               <img
-                src={assets.Profile} // Replace with actual profile image URL
+                src={assets.Profile}
                 alt="Profile"
                 className="w-10 h-10 rounded-xl"
               />
