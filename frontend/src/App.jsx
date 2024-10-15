@@ -10,6 +10,7 @@ import Login from './pages/Login'
 import { ToastContainer } from 'react-toastify';
 import Dashboard from './pages/Dashboard'
 import SupportUs from './components/SupportUs'
+import AlumniReg from './pages/AlumniReg'
 function App() {
   return (
     <div className=''>
@@ -23,6 +24,7 @@ function App() {
         <Route path='/roleselection' element={<RoleSelection />} />
         <Route path='/dashboard' element={<Dashboard />} />
         <Route path='/student-register' element={<StudentReg />} />
+        <Route path='/alumni-register' element={<AlumniReg />} />
         <Route path='/supportus' element={<SupportUs />} />
         
         </Routes>

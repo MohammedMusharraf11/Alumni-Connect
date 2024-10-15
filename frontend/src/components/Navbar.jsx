@@ -7,7 +7,7 @@ function Navbar() {
   const location = useLocation();
 
   // Array of paths where the buttons should be hidden
-  const hiddenButtonPaths = ['/student-register', '/roleselection',  '/login'];
+  const hiddenButtonPaths = ['/student-register', '/roleselection',  '/login', '/alumni-register'];
 
   // Check if the current path is in the hiddenButtonPaths array
   const hideButtons = hiddenButtonPaths.includes(location.pathname);
