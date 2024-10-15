@@ -61,6 +61,8 @@ function Login() {
 
     return (
         <>
+        <div className='sm:mx-[10%]'>
+
         <Navbar/>
         <div className="container mx-auto py-16 text-outfit">
             
@@ -78,7 +80,7 @@ function Login() {
                             onChange={handleChange}
                             className="border rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500"
                             
-                        />
+                            />
                     </div>
                     <div className="flex flex-col mb-4">
                         <label htmlFor="password" className="text-gray-600 mb-2">Password</label>
@@ -90,7 +92,7 @@ function Login() {
                             onChange={handleChange}
                             className="border rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500"
                             
-                        />
+                            />
                     </div>
                     <div className="flex justify-center mt-4">
                         <button type="submit" className="bg-primary text-white px-4 py-2 rounded-md hover:bg-primary-600">
@@ -109,6 +111,7 @@ function Login() {
             <ToastContainer />
         </div>
         <Footer/>
+                            </div>
         </>
     );
 }

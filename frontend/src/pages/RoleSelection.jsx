@@ -9,6 +9,9 @@ function RoleSelection() {
   const navigate = useNavigate()
   return (
     <>
+    <div className='sm:mx-[10%]'>
+
+   
     <Navbar/>
     <div className="container mx-auto py-16 font-outfit">
       <h2 className="text-3xl font-bold text-center mb-8 text-secondary">Select Your Role</h2>
@@ -33,6 +36,7 @@ function RoleSelection() {
       </div>
     </div>
     <Footer/>
+    </div>
     </>
   );
 }

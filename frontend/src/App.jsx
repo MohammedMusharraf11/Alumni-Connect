@@ -12,7 +12,7 @@ import Dashboard from './pages/Dashboard'
 import SupportUs from './components/SupportUs'
 function App() {
   return (
-    <div className='mx-4 sm:mx-[10%]'>
+    <div className=''>
 
       <ToastContainer />
       <Routes>

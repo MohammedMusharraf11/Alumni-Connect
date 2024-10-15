@@ -91,6 +91,8 @@ function StudentReg() {
 
   return (
     <>
+    <div className='sm:mx-[10%]'>
+
     <Navbar/>
     
     <div className="container mx-auto py-16 font-outfit">
@@ -107,7 +109,7 @@ function StudentReg() {
             placeholder="Enter your full name"
             className="border rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500"
             
-          />
+            />
         </div>
         <div className="flex flex-col">
           <label htmlFor="graduationYear" className="text-gray-600 mb-2">Graduation Year</label>
@@ -118,7 +120,7 @@ function StudentReg() {
             onChange={handleChange}
             className="border rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500"
             
-          >
+            >
             <option value="">Select your graduation year</option>
             {years.map((year) => (
               <option key={year} value={year}>
@@ -138,7 +140,7 @@ function StudentReg() {
             placeholder="Enter your college email"
             className="border rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500"
             
-          />
+            />
         </div>
         <div className="flex flex-col">
           <label htmlFor="course" className="text-gray-600 mb-2">Course</label>
@@ -151,7 +153,7 @@ function StudentReg() {
             placeholder="Enter your course"
             className="border rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500"
             
-          />
+            />
         </div>
         <div className="flex flex-col">
           <label htmlFor="usn" className="text-gray-600 mb-2">USN</label>
@@ -164,7 +166,7 @@ function StudentReg() {
             placeholder="Enter your USN"
             className="border rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500"
             
-          />
+            />
         </div>
         <div className="flex flex-col">
           <label htmlFor="fieldOfStudy" className="text-gray-600 mb-2">Field of Study</label>
@@ -177,7 +179,7 @@ function StudentReg() {
             placeholder="Enter your field of study"
             className="border rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500"
             
-          />
+            />
         </div>
         <div className="flex flex-col">
           <label htmlFor="linkedin" className="text-gray-600 mb-2">LinkedIn</label>
@@ -189,7 +191,7 @@ function StudentReg() {
             onChange={handleChange}
             placeholder="Enter your LinkedIn profile URL"
             className="border rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500"
-          />
+            />
         </div>
         <div className="flex flex-col">
           <label htmlFor="github" className="text-gray-600 mb-2">GitHub</label>
@@ -201,7 +203,7 @@ function StudentReg() {
             onChange={handleChange}
             placeholder="Enter your GitHub profile URL"
             className="border rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500"
-          />
+            />
         </div>
         <div className="flex flex-col">
           <label htmlFor="password" className="text-gray-600 mb-2">Password</label>
@@ -214,7 +216,7 @@ function StudentReg() {
             placeholder="Enter your password"
             className="border rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500"
             
-          />
+            />
         </div>
         <div className="flex flex-col">
           <label htmlFor="confirmPassword" className="text-gray-600 mb-2">Confirm Password</label>
@@ -227,7 +229,7 @@ function StudentReg() {
             placeholder="Confirm your password"
             className="border rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500"
             
-          />
+            />
         </div>
         <div className="flex flex-col">
           <label htmlFor="profilePhoto" className="text-gray-600 mb-2">Profile Photo</label>
@@ -237,7 +239,7 @@ function StudentReg() {
             name="profilePhoto"
             onChange={handleFileChange}
             className="border rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500"
-          />
+            />
         </div>
         <div className="col-span-2 flex justify-center">
           <button type="submit" className="bg-primary font-outfit text-white px-10 py-3 rounded-full font-light hidden md:block hover:bg-orange-600 transition">
@@ -252,6 +254,7 @@ function StudentReg() {
       <ToastContainer />
     </div>
     <Footer/>
+            </div>
     </>
   );
 }
