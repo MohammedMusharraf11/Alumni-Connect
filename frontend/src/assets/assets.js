@@ -8,6 +8,10 @@ import Icon04 from './icon-04.png';
 import Icon05 from './icon-05.png';
 import Student from './student.png';
 import Alumni from './alumni.png';
+import Profile from './profile_pic.png';
+import Calender from './calender.png';
+import ShakeHand from './shakehand.png';
+import Money from './money.png';
 
 export const assets = {
   Logo,
@@ -19,5 +23,10 @@ export const assets = {
   Icon04,
   Icon05,
   Student,
-  Alumni
+  Alumni,
+  Profile,
+  Calender,
+  ShakeHand,
+  Money
+
 };

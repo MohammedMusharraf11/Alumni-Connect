@@ -24,14 +24,14 @@ const Sidebar = () => {
 
 
   return (
-    <div className='fixed top-0 left-0 w-64 min-h-screen bg-white border-r font-outfit text-zinc-500'>
+    <div className='fixed top-0 left-0 w-64 min-h-screen bg-white border-r font-outfit '>
 
       <div className="flex justify-center py-5">
-        <img src={assets.Logo} alt="Logo" className="h-16 w-auto" />
+        <img src={assets.Logo} alt="Logo" className="h-16 w-auto " onClick={() => navigate('/')}/>
       </div>
 
 
-      <ul className='text-[#515151] mt-5'>
+      <ul className='text-[#2B64BB] mt-5'>
         <NavLink
           className={({ isActive }) =>
             `flex items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-64 cursor-pointer ${
@@ -98,7 +98,7 @@ const Sidebar = () => {
       <div className="absolute bottom-0 w-full">
     
       {/* Bottom Fixed Links */}
-      <ul className="text-[#515151]">
+      <ul className="text-[#2B64BB]">
         <NavLink
           className={({ isActive }) =>
             `flex items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer ${

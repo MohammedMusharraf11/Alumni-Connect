@@ -6,7 +6,7 @@ import Footer from '../components/Footer'
 
 function Home() {
   return (
-    <div>
+    <div className='sm:mx-[10%]'>
       <Navbar/>
         <Header/>
         <Features/>
