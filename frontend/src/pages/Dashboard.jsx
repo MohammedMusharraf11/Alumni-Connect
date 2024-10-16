@@ -68,7 +68,7 @@ function Dashboard() {
             <div className="relative mx-auto w-96">
               <input
                 type="text"
-                placeholder="Search..."
+                placeholder="Kahan gaya useyy dhundooo....."
                 className="px-4 py-2 w-full border border-gray-300 rounded-lg pl-10 focus:outline-none focus:border-[#023074a0]"
               />
               <Search className="absolute top-3 left-3 w-4 h-4 text-gray-400" />
