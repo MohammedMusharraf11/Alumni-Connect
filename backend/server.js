@@ -4,6 +4,8 @@ const app = express();
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const AuthRouter = require('./Routes/AuthRouter');
+const AuthAlumniRouter = require('./Routes/AuthAlumniRoutes');
+
 
 require('./Models/db');
 
@@ -19,7 +21,7 @@ app.get('/', (req, res) => {
 app.use(bodyParser.json());
 app.use(cors());
 app.use('/auth', AuthRouter);
-
+app.use('/api/alumni', AuthAlumniRouter)
 
 app.listen(PORT, () => {
 console.log(`Server is running on port ${PORT}`);
