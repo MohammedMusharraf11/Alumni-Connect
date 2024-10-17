@@ -7,13 +7,15 @@ const ScheduleEvent = ({ onCancel }) => {
   const [dateTime, setDateTime] = useState("");
   const [category, setCategory] = useState("");
 
+  // Event categories
   const categories = ["Tech Talk", "Hackathon", "Workshop", "Networking", "Non-Tech Meetup"];
 
+  // Handle form submission and validation
   const handleSchedule = () => {
     const currentDate = new Date();
     const selectedDate = new Date(dateTime);
 
-    // Form validation
+    // Form validation logic
     if (!eventDescription || !eventLink || !dateTime || !category) {
       handleError("Please fill in all fields.");
       return;
@@ -24,19 +26,22 @@ const ScheduleEvent = ({ onCancel }) => {
       return;
     }
 
-    // If all checks pass, show success toast
+    // Show success message
     handleSuccess("Event Scheduled Successfully");
-    onCancel(); // Close the form
+    onCancel(); // Close the form after scheduling
   };
 
   return (
-    <div className="bg-white p- rounded-lg shadow-lg p-4 m-4">
+    <div className="bg-white rounded-lg shadow-lg p-6 m-4">
+      {/* Event Description Field */}
       <textarea
         className="w-full p-2 mb-4 border border-gray-300 rounded-lg"
         placeholder="Event Description"
         value={eventDescription}
         onChange={(e) => setEventDescription(e.target.value)}
       />
+      
+      {/* Event Link Field */}
       <input
         type="text"
         className="w-full p-2 mb-4 border border-gray-300 rounded-lg"
@@ -44,12 +49,16 @@ const ScheduleEvent = ({ onCancel }) => {
         value={eventLink}
         onChange={(e) => setEventLink(e.target.value)}
       />
+      
+      {/* Event Date and Time */}
       <input
         type="datetime-local"
         className="w-full p-2 mb-4 border border-gray-300 rounded-lg"
         value={dateTime}
         onChange={(e) => setDateTime(e.target.value)}
       />
+      
+      {/* Event Category Selection */}
       <select
         className="w-full p-2 mb-4 border border-gray-300 rounded-lg"
         value={category}
@@ -62,6 +71,8 @@ const ScheduleEvent = ({ onCancel }) => {
           </option>
         ))}
       </select>
+
+      {/* Form Actions: Cancel and Submit */}
       <div className="flex justify-between">
         <button
           onClick={onCancel}
