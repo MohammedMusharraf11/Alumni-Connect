@@ -1,0 +1,37 @@
+/* Add this CSS to your styles file */
+.messages-container {
+    background-color: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+    max-width: 600px; /* Adjust max width as needed */
+    margin: auto; /* Center the container */
+  }
+  
+  .messages-container h2 {
+    font-size: 1.25rem; /* Adjust font size */
+    font-weight: bold;
+    margin-bottom: 1rem;
+  }
+  
+  .messages-container .message {
+    border-bottom: 1px solid #e5e5e5; /* Light gray border */
+    padding: 0.5rem 0; /* Vertical padding for messages */
+  }
+  
+  .messages-container .message p {
+    margin: 0; /* Remove default margin */
+  }
+  
+  .messages-container .message p.sender {
+    font-weight: bold; /* Bold sender name */
+  }
+  
+  .messages-container .message p.text {
+    color: #666; /* Gray color for message text */
+  }
+  
+  .messages-container .no-messages {
+    color: #999; /* Gray color for no messages */
+  }
+  

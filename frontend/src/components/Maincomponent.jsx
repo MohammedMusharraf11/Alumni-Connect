@@ -1,13 +1,19 @@
 import React, { useState } from 'react';
 import ScheduleEvent from './ScheduleEvent'; // Import ScheduleEvent form
 import JobOpeningsForm from './JobOpenings'; // Import JobOpenings form
-import HostMentorshipForm from './HostMentorship'; // Import HostMentorshipForm
+import HostMentorshipForm from './HostMentorship'; // Import HostMentorshipForm 
+import Messages from './Messages'; // Import Messages component
 
 const MainComponent = () => {
-  // State to track which form is active
   const [activeForm, setActiveForm] = useState('');
 
-  // Handler function to set the active form
+  // Sample conversations for demonstration
+  const conversations = [
+    { sender: 'John Doe', message: 'Hey! How are you?' },
+    { sender: 'Jane Smith', message: 'Looking forward to our meeting.' },
+    { sender: 'Alice Johnson', message: 'Did you receive my email?' },
+  ];
+
   const handleFormSelection = (form) => {
     setActiveForm(form);
   };
@@ -34,13 +40,20 @@ const MainComponent = () => {
         >
           Host a Mentorship
         </button>
+        <button 
+          onClick={() => handleFormSelection('messages')} 
+          className="px-4 py-2 bg-purple-500 text-white rounded"
+        >
+          Messages
+        </button>
       </div>
 
-      {/* Conditionally render the form based on the selected button */}
+      {/* Conditionally render the form or messages based on the selected button */}
       <div className="mt-6">
         {activeForm === 'scheduleEvent' && <ScheduleEvent onCancel={() => setActiveForm('')} />}
         {activeForm === 'jobOpening' && <JobOpeningsForm onCancel={() => setActiveForm('')} />}
         {activeForm === 'hostMentorship' && <HostMentorshipForm onCancel={() => setActiveForm('')} />}
+        {activeForm === 'messages' && <Messages conversations={conversations} />}
       </div>
     </div>
   );
