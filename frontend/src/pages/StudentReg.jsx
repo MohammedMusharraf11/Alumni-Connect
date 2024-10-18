@@ -5,6 +5,7 @@ import { handleError,handleSuccess } from '../utils/utils';
 import { ToastContainer } from 'react-toastify';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import { ImageUp } from 'lucide-react';
 
 
 
@@ -41,51 +42,60 @@ function StudentReg() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission here (e.g., send data to server)
-    console.log(signUp);
+    
     const { fullName, graduationYear, collegeEmail, course, usn, fieldOfStudy, linkedin, github, password, confirmPassword, profilePhoto } = signUp;
     
-    if(!fullName || !graduationYear || !collegeEmail || !course || !usn || !fieldOfStudy || !password || !confirmPassword ){
+    if (!fullName || !graduationYear || !collegeEmail || !course || !usn || !fieldOfStudy || !password || !confirmPassword) {
       handleError('Please fill all the fields');
       return;
     }
-    if(password !== confirmPassword){
+    
+    if (password !== confirmPassword) {
       handleError('Passwords do not match');
       return;
     }
+    
+    // Create a FormData object to handle file uploads
+    const formData = new FormData();
+    formData.append('fullName', fullName);
+    formData.append('graduationYear', graduationYear);
+    formData.append('collegeEmail', collegeEmail);
+    formData.append('course', course);
+    formData.append('usn', usn);
+    formData.append('fieldOfStudy', fieldOfStudy);
+    formData.append('linkedin', linkedin);
+    formData.append('github', github);
+    formData.append('password', password);
+    formData.append('confirmPassword', confirmPassword);
+    formData.append('profilePhoto', profilePhoto); // This handles the file upload
+  
     try {
       const url = 'http://localhost:8080/auth/signup';
-      const respose = await fetch(url, {
+      const response = await fetch(url, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(signUp),
+        body: formData, // Send the FormData object directly
       });
-      const result = await respose.json();
-      const {success,message ,error} = result;
-      if(success){
+  
+      const result = await response.json();
+      const { success, message, error } = result;
+      if (success) {
         handleSuccess(message);
         setTimeout(() => {
           navigate('/login');
-        },1000);
-        }else if(error){
-          const details = error?.details[0]?.message;
-          handleError(details);
-          
-      }else if(!success){
+        }, 1000);
+      } else if (error) {
+        const details = error?.details[0]?.message;
+        handleError(details);
+      } else if (!success) {
         handleError(message);
       }
       console.log(result);
-      
-
-      
+  
     } catch (error) {
       handleError(error.message);
     }
-    
-
   };
+  
 
   const years = Array.from({ length: 50 }, (_, i) => 2024 + i);
 
@@ -231,16 +241,19 @@ function StudentReg() {
             
             />
         </div>
-        <div className="flex flex-col">
-          <label htmlFor="profilePhoto" className="text-gray-600 mb-2">Profile Photo</label>
-          <input
-            type="file"
-            id="profilePhoto"
-            name="profilePhoto"
-            onChange={handleFileChange}
-            className="border rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500"
-            />
-        </div>
+  
+        <div className="flex items-center gap-4 mb-8 text-gray-500">
+    <label htmlFor="profilePhoto" className="cursor-pointer">
+        {signUp.profilePhoto ? (
+            <img className="w-16 bg-gray-100 rounded-full" src={URL.createObjectURL(signUp.profilePhoto)} alt="Profile Preview" />
+        ) : (
+            <ImageUp className="w-16 bg-gray-100 rounded-full" />
+        )}
+    </label>
+    <input onChange={handleFileChange} type="file" id="profilePhoto" name="profilePhoto" hidden />
+    <p>Upload Profile Photo <br /> picture</p>
+</div>
+
         <div className="col-span-2 flex justify-center">
           <button type="submit" className="bg-primary font-outfit text-white px-10 py-3 rounded-full font-light hidden md:block hover:bg-orange-600 transition">
             Create Account

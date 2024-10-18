@@ -44,7 +44,10 @@ const signupValidation = (req, res, next) => {
     confirmPassword: Joi.any().valid(Joi.ref('password')).required().messages({
       'any.only': 'Confirm password must match password',
     }),
-    profilePhoto: Joi.any().optional(),
+    profilePhoto: Joi.any().required().messages({
+      'any.required': 'Profile Photo is required',
+    }),
+    
   });
 
   // Validate the request body against the schema

@@ -1,62 +1,69 @@
-const User = require('../Models/users'); // Ensure you are importing User correctly
+const User = require('../Models/users');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { loginValidation } = require('../Middlewares/AuthValidation');
-
 const { validationResult } = require("express-validator");
+const {upload} = require('../Middlewares/multer');
 
+
+const cloudinary = require('cloudinary').v2;
 
 const signup = async (req, res) => {
     try {
-        // Destructure the required fields from the request body
         const { fullName, collegeEmail, password, confirmPassword, graduationYear, course, fieldOfStudy, github, linkedin, usn } = req.body;
+        const imageFile = req.file;
 
-        // Check if a user with the given college email already exists
+        // Check if user already exists
         const user = await User.findOne({ collegeEmail });
         if (user) {
-            return res.status(409).json({
-                message: 'User already exists, you can log in',
-                success: false
-            });
+            return res.status(409).json({ message: 'User already exists, you can log in', success: false });
         }
 
-        // Ensure passwords match
         if (password !== confirmPassword) {
-            return res.status(400).json({
-                message: "Passwords do not match",
-                success: false
-            });
+            return res.status(400).json({ message: "Passwords do not match", success: false });
         }
 
-        // Create a new user model instance
-        const userModel = new User({
+        // Upload image using Cloudinary's upload_stream
+        const result = await new Promise((resolve, reject) => {
+            const stream = cloudinary.uploader.upload_stream(
+                { resource_type: "image" },
+                (error, result) => {
+                    if (error) reject(error);
+                    else resolve(result);
+                }
+            );
+            stream.end(imageFile.buffer); // Pass the buffer from multer's memory storage
+        });
+
+        const imageURL = result.secure_url;
+
+        // Continue with password hashing and user creation...
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        const newUser = new User({
             fullName,
             collegeEmail,
-            password: await bcrypt.hash(password, 10), // Hash the password
+            password: hashedPassword,
             graduationYear,
             course,
             fieldOfStudy,
             github,
             linkedin,
-            usn
+            usn,
+            profilePhoto: imageURL
         });
 
-        // Save the new user to the database
-        await userModel.save();
-
-        // Respond with success message
-        res.status(201).json({
-            message: "Signup successful",
-            success: true
-        });
+        await newUser.save();
+        res.status(201).json({ message: "Signup successful", success: true });
     } catch (err) {
-        console.error(err); // Log any errors for debugging
-        res.status(500).json({
-            message: "Internal server error",
-            success: false
-        });
+        console.error(err);
+        res.status(500).json({ message: "Internal server error", success: false });
     }
 };
+
+
+
+module.exports = { signup };
+
 
 const login = async (req, res) => {
     try {
