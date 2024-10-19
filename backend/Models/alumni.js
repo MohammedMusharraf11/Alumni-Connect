@@ -44,6 +44,9 @@ const alumniSchema = new Schema({
         enum: ['alumni'], // Define roles specifically for alumni
         required: true,
     },
+
+    // Array to track followers (only students can follow alumni)
+  followers: [{ type: Schema.Types.ObjectId, ref: 'User' }]
 }, {
     timestamps: true, // Automatically creates `createdAt` and `updatedAt` fields
 });
