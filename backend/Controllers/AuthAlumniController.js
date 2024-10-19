@@ -17,7 +17,7 @@ const signupAlumni = async (req, res) => {
                 success: false
             });
         }
-
+        
         // Ensure passwords match
         if (password !== confirmPassword) {
             return res.status(400).json({
