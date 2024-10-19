@@ -6,11 +6,11 @@ import Footer from '../components/Footer'
 function About() {
   return (
     <>
-    <Navbar/>
-    <div>
-      This is about page
-    </div>
-    <Footer/>
+      <div className='sm:mx-[10%]'>
+        <Navbar />
+        This is about page
+      </div>
+      <Footer />
     </>
   )
 }

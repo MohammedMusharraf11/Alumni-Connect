@@ -5,13 +5,13 @@ import Footer from '../components/Footer'
 
 function Contact() {
   return (
-      <>
-      <Navbar/>
-    <div>
-      
-    </div>
-    <Footer/>
-      </>
+    <>
+      <div className='sm:mx-[10%]'>
+        <Navbar />
+
+      </div>
+      <Footer />
+    </>
   )
 }
 
