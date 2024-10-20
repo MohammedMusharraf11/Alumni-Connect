@@ -16,9 +16,9 @@ function Navbar() {
   const hideButtons = hiddenButtonPaths.includes(location.pathname);
 
   return (
-    <div className='sticky top-0 bg-white z-50 flex items-center justify-between text-sm py-4 mb-5 border-b border-b-grey-400 font-outfit sm:max-xl:mx-[-10%]'>
+    <div className='sticky top-0 bg-white z-50 flex items-center justify-between text-sm py-4 mb-5 border-b border-b-grey-400 font-outfit md:max-xl:mx-[-10%]'>
       <img className='w-44 cursor-pointer' src={assets.Logo} alt="" />
-      <ul className={`md:flex items-center gap-10 font-medium text-secondary md:max-lg:gap-6 max-md:hidden ${hideButtons ? 'justify-center w-full' : ''}`}>
+      <ul className={`xl:flex items-center gap-10 font-medium text-secondary xl:max-md:gap-6 max-xl:hidden ${hideButtons ? 'justify-center w-full' : ''}`}>
         <NavLink to={'/'}>
           <li className='py-1 font-semibold'>HOME</li>
           <hr className='border-none outline-none h-0.5 bg-primary w-3/5 m-auto hidden' />
@@ -38,15 +38,15 @@ function Navbar() {
       </ul>
       {!hideButtons && (
         <div className='flex items-start gap-4 md:max-lg:gap-2'>
-          <button onClick={() => navigate('/roleselection')} className='bg-primary font-outfit text-white px-10 py-3 rounded-full font-light hidden md:block hover:bg-orange-600 transition md:max-lg:px-6 md:max-lg:py-2'>
+          <button onClick={() => navigate('/roleselection')} className='bg-primary font-outfit text-white px-10 py-3 rounded-full font-light hidden xl:block hover:bg-orange-600 transition md:max-lg:px-6 md:max-lg:py-2'>
             Create Account
           </button>
-          <button onClick={() => navigate('/login')} className='bg-secondary font-outfit text-white px-10 py-3 rounded-full font-light hidden md:block md:max-lg:px-6 md:max-lg:py-2'>
+          <button onClick={() => navigate('/login')} className='bg-secondary font-outfit text-white px-10 py-3 rounded-full font-light hidden xl:block md:max-lg:px-6 md:max-lg:py-2'>
             Login
           </button>
         </div>
       )}
-      {<div className='md:hidden'>
+      {<div className='xl:hidden'>
 
         {!dropDown ? <div className="mr-4"
           onClick={() => setDropDown(!dropDown)}>
