@@ -7,3 +7,4 @@ router.post('/signup', signupAlumniValidation, signupAlumni);
 router.post('/login', loginAlumniValidation, loginAlumni);
 
 module.exports = router;
+
