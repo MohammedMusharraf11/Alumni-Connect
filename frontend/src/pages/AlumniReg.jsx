@@ -34,14 +34,14 @@ function AlumniReg() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     // Check values in console to ensure they're being set correctly
     console.log('Form Values:', signUp);
-  
-    const { fullName, graduationYear, collegeEmail, password, confirmPassword, linkedin, degreeCertificate } = signUp;
-  
+
+    const { fullName, graduationYear, collegeEmail, password, confirmPassword, profilePhoto, linkedin, degreeCertificate } = signUp;
+
     // Early validation checks
-    if (!fullName || !graduationYear || !collegeEmail || !password || !confirmPassword) {
+    if (!fullName || !graduationYear || !collegeEmail || !password || !confirmPassword || !profilePhoto) {
       handleError('Please fill all the fields');
       return;
     }
@@ -49,39 +49,40 @@ function AlumniReg() {
       handleError('Passwords do not match');
       return;
     }
-  
+
     try {
       const url = 'http://localhost:8080/api/alumni/signup';
-      const respose = await fetch(url, {
+      const formData = new FormData();
+      for (const key in signUp) {
+        formData.append(key, signUp[key]);
+      }
+      const response = await fetch(url, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(signUp),
+        body: formData,
       });
       const result = await respose.json();
-      const {success,message ,error} = result;
-      if(success){
+      const { success, message, error } = result;
+      if (success) {
         handleSuccess(message);
         setTimeout(() => {
           navigate('/login');
-        },1000);
-        }else if(error){
-          const details = error?.details[0]?.message;
-          handleError(details);
-          
-      }else if(!success){
+        }, 1000);
+      } else if (error) {
+        const details = error?.details[0]?.message;
+        handleError(details);
+
+      } else if (!success) {
         handleError(message);
       }
       console.log(result);
-      
 
-      
+
+
     } catch (error) {
       handleError(error.message);
     }
   };
-  
+
 
 
   const years = Array.from({ length: 24 }, (_, i) => 2000 + i);
