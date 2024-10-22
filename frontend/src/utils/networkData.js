@@ -1,69 +1,78 @@
 export const networkData = {
-    alumni: [
-      {
-        name: "John Doe",
-        graduationYear: "2015",
-        field: "Computer Science",
-        position: "Software Engineer at Google",
-        linkedin: "https://linkedin.com/in/johndoe"
-      },
-      {
-        name: "Jane Smith",
-        graduationYear: "2016",
-        field: "Mechanical Engineering",
-        position: "Project Manager at Tesla",
-        linkedin: "https://linkedin.com/in/janesmith"
-      },
-      {
-        name: "David Miller",
-        graduationYear: "2014",
-        field: "Electrical Engineering",
-        position: "Senior Engineer at Apple",
-        linkedin: "https://linkedin.com/in/davidmiller"
-      },
-      {
-        name: "Susan Clark",
-        graduationYear: "2017",
-        field: "Biomedical Engineering",
-        position: "Research Scientist at Genentech",
-        linkedin: "https://linkedin.com/in/susanclark"
-      },
-      {
-        name: "Michael Carter",
-        graduationYear: "2013",
-        field: "Civil Engineering",
-        position: "Infrastructure Engineer at AECOM",
-        linkedin: "https://linkedin.com/in/michaelcarter"
-      },
-      {
-        name: "Emma Davis",
-        graduationYear: "2018",
-        field: "Information Technology",
-        position: "Cybersecurity Analyst at IBM",
-        linkedin: "https://linkedin.com/in/emmadavis"
-      },
-      {
-        name: "Paul Anderson",
-        graduationYear: "2019",
-        field: "Finance",
-        position: "Investment Analyst at Goldman Sachs",
-        linkedin: "https://linkedin.com/in/paulanderson"
-      },
-      {
-        name: "Olivia Garcia",
-        graduationYear: "2020",
-        field: "Marketing",
-        position: "Digital Marketing Manager at Meta",
-        linkedin: "https://linkedin.com/in/oliviagarcia"
-      },
-      {
-        name: "Kevin White",
-        graduationYear: "2012",
-        field: "Chemical Engineering",
-        position: "Process Engineer at Dow Chemical",
-        linkedin: "https://linkedin.com/in/kevinwhite"
-      }
-    ],
+  alumni: [
+    {
+      name: "John Doe",
+      graduationYear: "2015",
+      field: "Computer Science",
+      position: "Software Engineer at Google",
+      linkedin: "https://linkedin.com/in/johndoe",
+      credits: 150,
+    },
+    {
+      name: "Jane Smith",
+      graduationYear: "2016",
+      field: "Mechanical Engineering",
+      position: "Project Manager at Tesla",
+      linkedin: "https://linkedin.com/in/janesmith",
+      credits: 250,
+    },
+    {
+      name: "David Miller",
+      graduationYear: "2014",
+      field: "Electrical Engineering",
+      position: "Senior Engineer at Apple",
+      linkedin: "https://linkedin.com/in/davidmiller",
+      credits: 200,
+    },
+    {
+      name: "Susan Clark",
+      graduationYear: "2017",
+      field: "Biomedical Engineering",
+      position: "Research Scientist at Genentech",
+      linkedin: "https://linkedin.com/in/susanclark",
+      credits: 180,
+    },
+    {
+      name: "Michael Carter",
+      graduationYear: "2013",
+      field: "Civil Engineering",
+      position: "Infrastructure Engineer at AECOM",
+      linkedin: "https://linkedin.com/in/michaelcarter",
+      credits: 230,
+    },
+    {
+      name: "Emma Davis",
+      graduationYear: "2018",
+      field: "Information Technology",
+      position: "Cybersecurity Analyst at IBM",
+      linkedin: "https://linkedin.com/in/emmadavis",
+      credits: 175,
+    },
+    {
+      name: "Paul Anderson",
+      graduationYear: "2019",
+      field: "Finance",
+      position: "Investment Analyst at Goldman Sachs",
+      linkedin: "https://linkedin.com/in/paulanderson",
+      credits: 160,
+    },
+    {
+      name: "Olivia Garcia",
+      graduationYear: "2020",
+      field: "Marketing",
+      position: "Digital Marketing Manager at Meta",
+      linkedin: "https://linkedin.com/in/oliviagarcia",
+      credits: 190,
+    },
+    {
+      name: "Kevin White",
+      graduationYear: "2012",
+      field: "Chemical Engineering",
+      position: "Process Engineer at Dow Chemical",
+      linkedin: "https://linkedin.com/in/kevinwhite",
+      credits: 140,
+    },
+  ],
     students: [
       {
         name: "Mohammmed Hamdan",

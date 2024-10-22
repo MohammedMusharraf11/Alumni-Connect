@@ -12,6 +12,8 @@ import Profile from './profile_pic.png';
 import Calender from './calender.png';
 import ShakeHand from './shakehand.png';
 import Money from './money.png';
+import Star from './star.png';
+import Dollor from './dollar.png';
 
 export const assets = {
   Logo,
@@ -27,6 +29,8 @@ export const assets = {
   Profile,
   Calender,
   ShakeHand,
-  Money
+  Money,
+  Star,
+  Dollor
 
 };
