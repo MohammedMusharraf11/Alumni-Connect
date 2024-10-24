@@ -82,7 +82,7 @@ We extend our gratitude to all contributors for their invaluable efforts in shap
 Don't forget to give a ⭐
 <div align="center">
   <a href="https://github.com/MohammedMusharraf11/Alumni-Connect">
-    <img src="https://contrib.rocks/image?repo=MohammedMusharraf11/Alumni-Connect&&max=10"/>
+    <img src="https://contrib.rocks/image?repo=MohammedMusharraf11/Alumni-Connect&&max=100"/>
   </a>
 </div>
 
