@@ -89,7 +89,7 @@ function AlumniReg() {
     <>
       <div className="container mx-auto py-16 font-outfit">
         <h2 className="text-3xl font-bold text-center mb-8 text-primary">Alumni Registration</h2>
-        <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
           <div className="flex flex-col">
             <label htmlFor="fullName" className="text-gray-600 mb-2">Full Name</label>
             <input
@@ -177,8 +177,8 @@ function AlumniReg() {
               className="border rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500"
             />
           </div>
-          <div className="col-span-2 flex justify-center">
-            <button type="submit" className="bg-primary font-outfit text-white px-10 py-3 rounded-full font-light hidden md:block hover:bg-orange-600 transition">
+          <div className="col-span-1 md:col-span-2 flex justify-center">
+            <button type="submit" className="bg-primary font-outfit text-white px-10 py-3 rounded-full font-light hover:bg-orange-600 transition">
               Create Account
             </button>
           </div>
