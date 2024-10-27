@@ -92,8 +92,6 @@ function Dashboard() {
         return <Network/>
       case "open-source":
         return <OpenSource/>
-        case "network":
-          return <Network/>
       default:
         return <div>Default content</div>;
     }

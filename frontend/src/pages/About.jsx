@@ -1,18 +1,7 @@
-import React from 'react'
-import Navbar from '../components/Navbar'
-import Footer from '../components/Footer'
-
+import React from "react";
 
 function About() {
-  return (
-    <>
-      <div className='sm:mx-[10%]'>
-        <Navbar />
-        This is about page
-      </div>
-      <Footer />
-    </>
-  )
+  return <div>This is about page</div>;
 }
 
-export default About
+export default About;
