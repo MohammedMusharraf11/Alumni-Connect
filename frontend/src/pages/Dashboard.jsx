@@ -7,7 +7,7 @@ import ScheduleEventForm from "../components/ScheduleEvent";
 import HostMentorshipForm from "../components/HostMentorship";
 import JobOpeningsForm from "../components/JobOpenings";
 import { Search } from "lucide-react";
-import {assets} from "../assets/assets"; // Assuming assets is properly imported
+import { assets } from "../assets/assets"; // Assuming assets is properly imported
 import Network from "../components/Network";
 import OpenSource from "../components/OpenSource";
 
@@ -35,7 +35,7 @@ function Dashboard() {
   };
 
   const toggleDropdown = () => {
-    setIsDropdownOpen(!isDropdownOpen);
+    setIsDropdownOpen(!isDropdownOpen); // Toggle the dropdown visibility
   };
 
   const currentDate = new Date().toLocaleDateString();
@@ -51,16 +51,12 @@ function Dashboard() {
     if (title === "Open Source") {
       setActiveSection("open-source");
     }
-    if (title === "Network") {
-      setActiveSection("network");
-    }
   };
 
   const handleCancelForm = () => {
     setActiveCard("");
   };
 
-  // Render content based on the active section
   const renderContent = () => {
     switch (activeSection) {
       case "dashboard":
@@ -89,11 +85,9 @@ function Dashboard() {
       case "events":
         return <EventsList />;
       case "network":
-        return <Network/>
+        return <Network />;
       case "open-source":
-        return <OpenSource/>
-        case "network":
-          return <Network/>
+        return <OpenSource />;
       default:
         return <div>Default content</div>;
     }
@@ -102,15 +96,10 @@ function Dashboard() {
   return (
     <div className="grid grid-cols-12 min-h-screen w-screen max-w-full bg-[#EDF0F7]">
       <div className="col-span-2 rounded-lg min-h-full">
-        {/* Pass activeSection and setActiveSection to Sidebar */}
-        <Sidebar
-          setActiveSection={setActiveSection}
-          activeSection={activeSection}
-        />
+        <Sidebar setActiveSection={setActiveSection} activeSection={activeSection} />
       </div>
 
       <div className="col-span-8 rounded-lg min-h-fit pt-4">
-        {/* Main Content */}
         <div className="flex justify-between items-center gap-8 px-4">
           <div className="flex flex-col justify-center">
             <h1 className="text-3xl font-outfit font-bold text-secondary">
@@ -128,56 +117,53 @@ function Dashboard() {
           </div>
         </div>
 
-        {/* Conditionally render the selected form */}
-        {activeCard === "Schedule an Event" &&  (
-          <ScheduleEventForm onCancel={handleCancelForm} />
-          
-        )}
-        {activeCard === "Host a Mentorship" && (
-          <HostMentorshipForm onCancel={handleCancelForm} />
-        )}
-        {activeCard === "Job Openings" && (
-          <JobOpeningsForm onCancel={handleCancelForm} />
-        )}
+        {activeCard === "Schedule an Event" && <ScheduleEventForm onCancel={handleCancelForm} />}
+        {activeCard === "Host a Mentorship" && <HostMentorshipForm onCancel={handleCancelForm} />}
+        {activeCard === "Job Openings" && <JobOpeningsForm onCancel={handleCancelForm} />}
 
-        {/* Render the main content based on active section */}
         {renderContent()}
       </div>
 
       {/* Right-side Profile Section */}
-      <div className="col-span-2 flex justify-center px-4 pt-4 ">
-        <div className="relative flex flex-col items-center">
-          <button
-            onClick={toggleDropdown}
-            className="flex items-center space-x-2 focus:outline-none"
-          >
-            <span className="font-outfit font-bold text-secondary">
-              {loggedInUser}
-            </span>
-            <img
-              src={assets.Profile}
-              alt="Profile"
-              className="w-10 h-10 rounded-xl"
-            />
-          </button>
-          {isDropdownOpen && (
-            <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-20">
-              <button
-                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
-                onClick={() => navigate("/update-profile")}
-              >
-                Update Profile
-              </button>
-              <button
-                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
-                onClick={handleLogout}
-              >
-                Logout
-              </button>
-            </div>
-          )}
-        </div>
+      <div className="relative flex flex-col items-center">
+  <button
+    onClick={toggleDropdown}
+    className="flex items-center space-x-2 focus:outline-none"
+  >
+    <span className="font-outfit font-bold text-secondary">
+      {loggedInUser}
+    </span>
+    <img
+      src={assets.Profile}
+      alt="Profile"
+      className="w-10 h-10 rounded-full"
+    />
+  </button>
+
+  {/* Dropdown Menu with Arrow */}
+  {isDropdownOpen && (
+    <div className="absolute top-14 mt-2 w-48 bg-white rounded-md shadow-lg z-50">
+      {/* Arrow */}
+      <div className="absolute -top-2 left-10 w-0 h-0 border-l-8 border-r-8 border-b-8 border-transparent border-b-white"></div>
+
+      <div className="py-2">
+        <button
+          className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
+          onClick={() => navigate("/update-profile")}
+        >
+          Update Profile
+        </button>
+        <button
+          className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
+          onClick={handleLogout}
+        >
+          Logout
+        </button>
       </div>
+    </div>
+  )}
+</div>
+
     </div>
   );
 }
