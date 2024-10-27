@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const cloudinary = require("../../frontend/src/utils/cloudinary");
+const cloudinary = require('../utils/cloudinary');
 const upload = require("../Middlewares/multer");
 
 const handleUpload = async (req, res) => {

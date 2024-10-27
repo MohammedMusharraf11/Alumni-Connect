@@ -63,7 +63,7 @@ function StudentReg() {
         method: 'POST',
         body: formData,
       });
-      const result = await respose.json();
+      const result = await response.json();
       const { success, message, error } = result;
       if (success) {
         handleSuccess(message);
