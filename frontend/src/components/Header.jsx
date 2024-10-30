@@ -10,7 +10,7 @@ function Header() {
       {/* Banner Section */}
       <div className="relative">
         <img src={BannerImage} alt="Banner" className="w-full h-auto" />
-        <button onClick={()=>navigate('/roleselection')} className="absolute top-[70%] left-[60%] sm:left-[55%] transform -translate-x-1/2 bg-primary text-white font-light py-2 sm:px-6 px-4 rounded-full shadow-lg hover:bg-orange-600 transition font-outfit xl:top-[72%] xl:left-[46%]">
+        <button onClick={()=>navigate('/roleselection')} className="absolute top-[70%] left-[60%] sm:left-[55%] transform -translate-x-1/2 bg-primary text-white font-light py-1 sm:py-2 sm:px-6 px-4 rounded-full shadow-lg hover:bg-orange-600 transition font-outfit xl:top-[72%] xl:left-[46%]">
           Get Started
         </button>
       </div>
