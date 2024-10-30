@@ -17,9 +17,9 @@ function Navbar() {
 
   return (
     <div className='sticky top-0 bg-white z-50 flex items-center justify-between text-sm py-4 mb-5 border-b border-b-grey-400 font-outfit md:max-xl:mx-[-10%]'>
-      <div>
+      <NavLink to={'/'}>
       <img className='w-44 cursor-pointer' src={assets.Logo} alt="" />
-      </div>
+      </NavLink>
       
       <ul className={`xl:flex items-center gap-10 font-medium text-secondary xl:max-md:gap-6 max-xl:hidden ${hideButtons ? 'justify-center w-full' : ''}`}>
         <NavLink to={'/'}>
