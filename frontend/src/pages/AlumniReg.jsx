@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { handleError, handleSuccess } from '../utils/utils';
 import { ToastContainer } from 'react-toastify';
-import Navbar from '../components/Navbar'; // Import Navbar if necessary
+
 
 function AlumniReg() {
   const [signUp, setSignUp] = useState({
@@ -81,7 +81,7 @@ function AlumniReg() {
   return (
     <>
       <div className='sm:mx-[10%]'>
-        <Navbar />
+        
         <div className="container mx-auto py-16 font-outfit">
           <h2 className="text-3xl font-bold text-center mb-8 text-primary">Alumni Registration</h2>
           <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-8">
