@@ -3,102 +3,84 @@ import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { handleError, handleSuccess } from '../utils/utils';
 import { ToastContainer } from 'react-toastify';
+import axios from 'axios';
 
 function StudentReg() {
 
-  const [signUp, setsignUp] = useState({
-    fullName: '',
-    graduationYear: '',
-    collegeEmail: '',
-    course: '',
-    usn: '',
-    fieldOfStudy: '',
-    linkedin: '',
-    github: '',
-    password: '',
-    confirmPassword: '',
-    profilePhoto: null,
-  });
+  const [fullName, setFullName] = useState('');
+  const [graduationYear, setGraduationYear] = useState('');
+  const [collegeEmail, setCollegeEmail] = useState('');
+  const [course, setCourse] = useState('');
+  const [usn, setUsn] = useState('');
+  const [fieldOfStudy, setFieldOfStudy] = useState('');
+  const [linkedin, setLinkedin] = useState('');
+  const [github, setGithub] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [profilePhoto, setProfilePhoto] = useState(null);
+
+  // API: 
   const navigate = useNavigate();
-
-  const handleChange = (e) => {
-    setsignUp({
-      ...signUp,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const handleFileChange = (e) => {
-    setsignUp({
-      ...signUp,
-      profilePhoto: e.target.files[0],
-    });
-  };
-
-  const handleSubmit = async (e) => {
+  
+  const submitForm = async (e) => {
     e.preventDefault();
-    // Handle form submission here (e.g., send data to server)
-    console.log(signUp);
-    const { fullName, graduationYear, collegeEmail, course, usn, fieldOfStudy, linkedin, github, password, confirmPassword, profilePhoto } = signUp;
 
-    if (!fullName || !graduationYear || !collegeEmail || !course || !usn || !fieldOfStudy || !password || !confirmPassword || !profilePhoto) {
+    if(!fullName || !graduationYear || !collegeEmail || !course || !usn || !fieldOfStudy || !linkedin || !github || !password || !confirmPassword || !profilePhoto) {
       handleError('Please fill all the fields');
       return;
     }
-    if (password !== confirmPassword) {
+    if(password !== confirmPassword) {
       handleError('Passwords do not match');
       return;
     }
+
+    const formData = new FormData();
+    formData.append('fullName', fullName);
+    formData.append('graduationYear', graduationYear);
+    formData.append('collegeEmail', collegeEmail);
+    formData.append('course', course);
+    formData.append('usn', usn);
+    formData.append('fieldOfStudy', fieldOfStudy);
+    formData.append('linkedin', linkedin);
+    formData.append('github', github);
+    formData.append('password', password);
+    formData.append('confirmPassword', confirmPassword);
+    formData.append('image', profilePhoto);
+
     try {
-      const url = 'http://localhost:8080/auth/signup';
-      const formData = new FormData();
-      for (const key in signUp) {
-        formData.append(key, signUp[key]);
-      }
-      const response = await fetch(url, {
-        method: 'POST',
-        body: formData,
+      const response = await axios.post('http://localhost:8080/auth/signup', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data', // Set the content type for file upload
+        },
       });
-      const result = await response.json();
-      const { success, message, error } = result;
-      if (success) {
-        handleSuccess(message);
-        setTimeout(() => {
-          navigate('/login');
-        }, 1000);
-      } else if (error) {
-        const details = error?.details[0]?.message;
-        handleError(details);
-
-      } else if (!success) {
-        handleError(message);
+  
+      if (response.data.success) {
+        handleSuccess(response.data.message);
+        setTimeout(() => navigate('/login'), 1000);
+      } else {
+        handleError(response.data.message);
       }
-      console.log(result);
-
-
-
     } catch (error) {
-      handleError(error.message);
+      handleError(error.response?.data?.message || error.message);
     }
-
-
   };
 
-  const years = Array.from({ length: 50 }, (_, i) => 2024 + i);
+
+  const years = Array.from({ length: 5 }, (_, i) => 2024 + i);
 
   return (
     <>
       <div className="container mx-auto py-16 font-outfit">
         <h2 className="text-3xl font-bold text-center mb-8 text-primary">Student Registration</h2>
-        <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
+        <form onSubmit={submitForm} className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
           <div className="flex flex-col">
             <label htmlFor="fullName" className="text-gray-600 mb-2">Full Name</label>
             <input
               type="text"
               id="fullName"
               name="fullName"
-              value={signUp.fullName}
-              onChange={handleChange}
+              value={fullName}
+              onChange={(e)=> setFullName(e.target.value)}
               placeholder="Enter your full name"
               className="border rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500"
 
@@ -109,8 +91,8 @@ function StudentReg() {
             <select
               id="graduationYear"
               name="graduationYear"
-              value={signUp.graduationYear}
-              onChange={handleChange}
+              value={graduationYear}
+              onChange={(e)=> setGraduationYear(e.target.value)}
               className="border rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500"
 
             >
@@ -128,8 +110,8 @@ function StudentReg() {
               type="email"
               id="collegeEmail"
               name="collegeEmail"
-              value={signUp.collegeEmail}
-              onChange={handleChange}
+              value={collegeEmail}
+              onChange={(e)=> setCollegeEmail(e.target.value)}
               placeholder="Enter your college email"
               className="border rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500"
 
@@ -141,8 +123,8 @@ function StudentReg() {
               type="text"
               id="course"
               name="course"
-              value={signUp.course}
-              onChange={handleChange}
+              value={course}
+              onChange={(e)=> setCourse(e.target.value)}
               placeholder="Enter your course"
               className="border rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500"
 
@@ -154,8 +136,8 @@ function StudentReg() {
               type="text"
               id="usn"
               name="usn"
-              value={signUp.usn}
-              onChange={handleChange}
+              value={usn}
+              onChange={(e)=> setUsn(e.target.value)}
               placeholder="Enter your USN"
               className="border rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500"
 
@@ -167,8 +149,8 @@ function StudentReg() {
               type="text"
               id="fieldOfStudy"
               name="fieldOfStudy"
-              value={signUp.fieldOfStudy}
-              onChange={handleChange}
+              value={fieldOfStudy}
+              onChange={(e)=> setFieldOfStudy(e.target.value)}
               placeholder="Enter your field of study"
               className="border rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500"
 
@@ -180,8 +162,8 @@ function StudentReg() {
               type="url"
               id="linkedin"
               name="linkedin"
-              value={signUp.linkedin}
-              onChange={handleChange}
+              value={linkedin}
+              onChange={(e)=> setLinkedin(e.target.value)}
               placeholder="Enter your LinkedIn profile URL"
               className="border rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500"
             />
@@ -192,8 +174,8 @@ function StudentReg() {
               type="url"
               id="github"
               name="github"
-              value={signUp.github}
-              onChange={handleChange}
+              value={github}
+              onChange={(e)=> setGithub(e.target.value)}
               placeholder="Enter your GitHub profile URL"
               className="border rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500"
             />
@@ -204,8 +186,8 @@ function StudentReg() {
               type="password"
               id="password"
               name="password"
-              value={signUp.password}
-              onChange={handleChange}
+              value={password}
+              onChange={(e)=> setPassword(e.target.value)}
               placeholder="Enter your password"
               className="border rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500"
 
@@ -217,8 +199,8 @@ function StudentReg() {
               type="password"
               id="confirmPassword"
               name="confirmPassword"
-              value={signUp.confirmPassword}
-              onChange={handleChange}
+              value={confirmPassword}
+              onChange={(e)=> setConfirmPassword(e.target.value)}
               placeholder="Confirm your password"
               className="border rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500"
 
@@ -229,8 +211,8 @@ function StudentReg() {
             <input
               type="file"
               id="profilePhoto"
-              name="profilePhoto"
-              onChange={handleFileChange}
+              name="image"
+              onChange={(e)=> setProfilePhoto(e.target.files[0])}
               className="border rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500"
             />
           </div>

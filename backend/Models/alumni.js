@@ -1,3 +1,4 @@
+const { required } = require('joi');
 const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
@@ -34,6 +35,7 @@ const alumniSchema = new Schema({
     },
     profilePhoto: {
         type: String, // Stores the file path or URL of the uploaded profile photo
+        required: true,
     },
     verified: {
         type: Boolean,

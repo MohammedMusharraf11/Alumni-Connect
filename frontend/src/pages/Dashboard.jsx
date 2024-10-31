@@ -13,6 +13,7 @@ import OpenSource from "../components/OpenSource";
 
 function Dashboard() {
   const [loggedInUser, setLoggedInUser] = useState("");
+  const[profilePhoto,setProfilePhoto] = useState("");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [activeCard, setActiveCard] = useState("");
   const [activeSection, setActiveSection] = useState("dashboard"); // Track the active section
@@ -20,14 +21,20 @@ function Dashboard() {
 
   useEffect(() => {
     const user = localStorage.getItem("loggedInUser");
+    const photo = localStorage.getItem("profilePhoto");
     if (user) {
       setLoggedInUser(user);
+    }
+    if(photo){
+      setProfilePhoto("https://res.cloudinary.com/dqcdmx9mt/image/upload/v1730397746/zodkbilfj6uqzao6leyz.png");
+      console.log(profilePhoto);
     }
   }, []);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("loggedInUser");
+    localStorage.removeItem("profilePhoto");
     alert("Logged out successfully");
     setTimeout(() => {
       navigate("/");
@@ -152,11 +159,19 @@ function Dashboard() {
             <span className="font-outfit font-bold text-secondary">
               {loggedInUser}
             </span>
-            <img
-              src={assets.Profile}
-              alt="Profile"
-              className="w-10 h-10 rounded-xl"
-            />
+            {profilePhoto ? ( // Use profile photo from state
+              <img
+                src={profilePhoto}
+                alt="Profile"
+                className="w-10 h-10 rounded-xl"
+              />
+            ) : (
+              <img
+                src={assets.Profile}
+                alt="Profile"
+                className="w-10 h-10 rounded-xl"
+              />
+            )}
           </button>
           {isDropdownOpen && (
             <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-20">

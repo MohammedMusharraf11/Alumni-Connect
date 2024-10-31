@@ -6,14 +6,14 @@ const cors = require('cors');
 const AuthRouter = require('./Routes/AuthRouter');
 const AuthAlumniRouter = require('./Routes/AuthAlumniRoutes');
 const uploadRoute = require('./Routes/routeUpload');
-
+const connectCloudinary = require('./utils/cloudinary');
 
 require('./Models/db');
 
 
 
 const PORT = process.env.PORT || 8080;
-
+connectCloudinary();
 
 app.get('/', (req, res) => {
     res.send('Hello World');
