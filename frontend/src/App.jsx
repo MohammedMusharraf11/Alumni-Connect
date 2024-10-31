@@ -11,6 +11,7 @@ import { ToastContainer } from 'react-toastify';
 import Dashboard from './pages/Dashboard'
 import SupportUs from './components/SupportUs'
 import AlumniReg from './pages/AlumniReg'
+import Features from './components/Features'
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path='/about' element={<About />} />
           <Route path='/contact' element={<Contact />} />
           <Route path='/login' element={<Login />} />
+          <Route path='/features' element={<Features />} />
           <Route path='/roleselection' element={<RoleSelection />} />
           <Route path='/student-register' element={<StudentReg />} />
           <Route path='/alumni-register' element={<AlumniReg />} />
