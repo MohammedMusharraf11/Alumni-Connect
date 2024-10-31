@@ -3,14 +3,17 @@ import React from "react";
 function About() {
   return (
     <div className="p-6 sm:p-8 md:p-10 lg:p-12 font-sans text-gray-800 max-w-3xl mx-auto bg-white rounded-lg shadow-lg">
-      <h1 className=" flex items-center justify-center text-2xl sm:text-3xl md:text-4xl font-bold text-orange-500 mb-4">About Us</h1>
+      <h1 className="flex items-center justify-center text-2xl sm:text-3xl md:text-4xl font-bold text-orange-500 mb-4">About Us</h1>
       
       {/* Welcome Section */}
       <p className="text-lg md:text-xl text-gray-700 mb-6">
         <span className="font-semibold text-blue-800">Welcome!</span> This is more than just a platform; it’s a place to <span className="text-orange-500 font-semibold">connect, learn,</span> and <span className="text-orange-500 font-semibold">grow together.</span> Whether you’re an alumnus, a student, or just curious, there’s something here for everyone!
       </p>
       
-      <div className="border-t-4 border-orange-500 w-20 mb-8"></div>
+      {/* Dotted Line */}
+      <div className="flex justify-center mb-8">
+        <div className="border-t-4 border-dotted border-orange-500 w-20"></div>
+      </div>
 
       {/* Features Section */}
       <h2 className="text-lg sm:text-xl md:text-2xl font-semibold text-blue-800 mb-4">Our Features:</h2>
@@ -29,7 +32,10 @@ function About() {
         </li>
       </ul>
 
-      <div className="border-t-4 border-orange-500 w-20 my-8"></div>
+      {/* Dotted Line */}
+      <div className="flex justify-center my-8">
+        <div className="border-t-4 border-dotted border-orange-500 w-20"></div>
+      </div>
 
       {/* Closing Statement */}
       <p className="text-lg md:text-xl text-gray-700">
