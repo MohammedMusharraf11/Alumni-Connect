@@ -1,4 +1,5 @@
 import {v2 as cloudinary} from "cloudinary"
+require('dotenv').config();
 
 
 cloudinary.config({ 

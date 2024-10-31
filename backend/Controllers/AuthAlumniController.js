@@ -2,13 +2,16 @@ const Alumni = require('../Models/alumni'); // Ensure you are importing the Alum
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { validationResult } = require("express-validator");
-
+const cloudinary = require('cloudinary').v2;
 // Signup function for alumni
 const signupAlumni = async (req, res) => {
     try {
         // Destructure the required fields from the request body
-        const { fullName, collegeEmail, password, confirmPassword, graduationYear, linkedin, degreeCertificate, profilePhoto } = req.body;
+        const { fullName, collegeEmail, password, confirmPassword, graduationYear, linkedin } = req.body;
+        const  profilePhoto  = req.file;
+        console.log({fullName, collegeEmail, password, confirmPassword, graduationYear, linkedin}, profilePhoto);
 
+        
         // Check if an alumni with the given college email already exists
         const alumni = await Alumni.findOne({ collegeEmail });
         if (alumni) {
@@ -26,6 +29,10 @@ const signupAlumni = async (req, res) => {
             });
         }
 
+        console.log("Uploaded File:", profilePhoto);
+        // Upload Image to Cloudinary
+        const result = await cloudinary.uploader.upload(profilePhoto.path, { resource_type: 'image' });
+        const imageURL = result.secure_url;
         // Create a new alumni model instance
         const alumniModel = new Alumni({
             fullName,
@@ -33,8 +40,7 @@ const signupAlumni = async (req, res) => {
             password: await bcrypt.hash(password, 10), // Hash the password
             graduationYear,
             linkedin,
-            degreeCertificate,
-            profilePhoto,
+            profilePhoto: imageURL,
             verified: false, // Initially set to false when an alumni registers
             role: 'alumni', // Assign role as 'alumni'
         });
@@ -74,7 +80,7 @@ const loginAlumni = async (req, res) => {
         }
 
         const jwtToken = jwt.sign({ userId: alumni._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-        res.status(200).json({ message: 'Login successful', token: jwtToken, success: true, fullname: alumni.fullName });
+        res.status(200).json({ message: 'Login successful', token: jwtToken, success: true, fullname: alumni.fullName, profilePhoto: alumni.profilePhoto });
 
     } catch (error) {
         return res.status(500).json({ message: error.message });

@@ -1,12 +1,13 @@
-const multer = require("multer");
+const path = require('path');
+const multer = require('multer');
 
 const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "../frontend/public/temp");
-  },
-  filename: function (req, file, cb) {
-    cb(null, file.originalname);
-  }
+    destination: (req, file, callback) => {
+        callback(null, path.join(__dirname, '../uploads')); // Use the backend-relative path
+    },
+    filename: (req, file, callback) => {
+        callback(null, Date.now() + '-' + file.originalname);
+    }
 });
 
 const upload = multer({ storage });

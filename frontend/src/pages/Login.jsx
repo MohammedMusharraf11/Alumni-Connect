@@ -46,11 +46,12 @@ function Login() {
                 body: JSON.stringify(loginInfo),
             });
             const result = await response.json();
-            const { success, message, token, error, fullname } = result;
-
+            const { success, message, token, error, fullname, profilePhoto} = result;
+            console.log(result);
             if (success) {
                 handleSuccess(message);
                 localStorage.setItem('token', token);
+                localStorage.setItem('profilePhoto', profilePhoto);
                 localStorage.setItem('loggedInUser', fullname);
                 setTimeout(() => {
                     navigate('/dashboard');

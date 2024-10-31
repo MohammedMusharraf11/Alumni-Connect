@@ -2,7 +2,7 @@ const User = require('../Models/users'); // Ensure you are importing User correc
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { loginValidation } = require('../Middlewares/AuthValidation');
-
+const cloudinary = require('cloudinary').v2;
 const { validationResult } = require("express-validator");
 
 
@@ -10,7 +10,9 @@ const signup = async (req, res) => {
     try {
         // Destructure the required fields from the request body
         const { fullName, collegeEmail, password, confirmPassword, graduationYear, course, fieldOfStudy, github, linkedin, usn } = req.body;
-
+        const profilePhoto = req.file;
+        console.log({fullName, collegeEmail, password, confirmPassword, graduationYear, course, fieldOfStudy, github, linkedin, usn}, profilePhoto);
+        
         // Check if a user with the given college email already exists
         const user = await User.findOne({ collegeEmail });
         if (user) {
@@ -28,6 +30,9 @@ const signup = async (req, res) => {
             });
         }
 
+        const result = await cloudinary.uploader.upload(profilePhoto.path, { resource_type: 'image' });
+        const imageURL = result.secure_url;
+
         // Create a new user model instance
         const userModel = new User({
             fullName,
@@ -35,6 +40,7 @@ const signup = async (req, res) => {
             password: await bcrypt.hash(password, 10), // Hash the password
             graduationYear,
             course,
+            profilePhoto: imageURL,
             fieldOfStudy,
             github,
             linkedin,
@@ -70,7 +76,7 @@ const login = async (req, res) => {
         if (!validPassword) return res.status(400).json({ message: errorMessage, success: false });
 
         const jwtToken = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-        res.status(200).json({ message: 'Login successful', token: jwtToken, success: true, fullname: user.fullName });
+        res.status(200).json({ message: 'Login successful', token: jwtToken, success: true, fullname: user.fullName, profilePhoto: user.profilePhoto });
 
     } catch (error) {
         return res.status(500).json({ message: error.message });
