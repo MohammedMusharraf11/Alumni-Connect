@@ -26,8 +26,7 @@ function Dashboard() {
       setLoggedInUser(user);
     }
     if(photo){
-      setProfilePhoto("https://res.cloudinary.com/dqcdmx9mt/image/upload/v1730397746/zodkbilfj6uqzao6leyz.png");
-      console.log(profilePhoto);
+      setProfilePhoto(photo);
     }
   }, []);
 
@@ -157,24 +156,24 @@ function Dashboard() {
             className="flex items-center space-x-2 focus:outline-none"
           >
             <span className="font-outfit font-bold text-secondary">
-              {loggedInUser}
+             <p className="text-primary underline" onClick={toggleDropdown}>Edit Profile</p>
             </span>
             {profilePhoto ? ( // Use profile photo from state
               <img
                 src={profilePhoto}
                 alt="Profile"
-                className="w-10 h-10 rounded-xl"
+                className="w-12 h-12 rounded-xl"
               />
             ) : (
               <img
                 src={assets.Profile}
                 alt="Profile"
-                className="w-10 h-10 rounded-xl"
+                className="w-12 h-12 rounded-xl"
               />
             )}
           </button>
           {isDropdownOpen && (
-            <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-20">
+            <div className="absolute right-0 mt-10 w-46 bg-white bg-opacity-25 rounded-md shadow-lg z-20">
               <button
                 className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
                 onClick={() => navigate("/update-profile")}
