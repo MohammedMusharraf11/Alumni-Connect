@@ -34,8 +34,8 @@ function Login() {
         
         // Determine the API endpoint based on user type
         const url = userType === 'alumni'
-            ? 'http://localhost:8080/api/alumni/login' // Alumni login endpoint
-            : 'http://localhost:8080/auth/login'; // User login endpoint
+            ? 'https://alumni-connect-backend-q6qo.onrender.com/api/alumni/login' // Alumni login endpoint
+            : 'https://alumni-connect-backend-q6qo.onrender.com/auth/login'; // User login endpoint
 
         try {
             const response = await fetch(url, {

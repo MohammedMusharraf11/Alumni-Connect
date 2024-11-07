@@ -30,7 +30,7 @@ function AlumniReg() {
   //   }
 
   //   try {
-  //     const response = await axios.post('http://localhost:8080/api/alumni/signup', {
+  //     const response = await axios.post('https://alumni-connect-backend-q6qo.onrender.com/api/alumni/signup', {
   //       fullName,
   //       graduationYear,
   //       collegeEmail,
@@ -79,7 +79,7 @@ function AlumniReg() {
     }
   
     try {
-      const response = await axios.post('http://localhost:8080/api/alumni/signup', formData, {
+      const response = await axios.post('https://alumni-connect-backend-q6qo.onrender.com/api/alumni/signup', formData, {
         headers: {
           'Content-Type': 'multipart/form-data', // Set the content type for file upload
         },

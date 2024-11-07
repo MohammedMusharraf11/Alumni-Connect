@@ -48,7 +48,7 @@ function StudentReg() {
     formData.append('image', profilePhoto);
 
     try {
-      const response = await axios.post('http://localhost:8080/auth/signup', formData, {
+      const response = await axios.post('https://alumni-connect-backend-q6qo.onrender.com/auth/signup', formData, {
         headers: {
           'Content-Type': 'multipart/form-data', // Set the content type for file upload
         },
