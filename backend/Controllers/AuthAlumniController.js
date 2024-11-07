@@ -1,5 +1,5 @@
 const Alumni = require('../Models/alumni'); // Ensure you are importing the Alumni model correctly
-const bcrypt = require('bcrypt');
+const bcryptjs = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { validationResult } = require("express-validator");
 const cloudinary = require('cloudinary').v2;
@@ -37,7 +37,7 @@ const signupAlumni = async (req, res) => {
         const alumniModel = new Alumni({
             fullName,
             collegeEmail,
-            password: await bcrypt.hash(password, 10), // Hash the password
+            password: await bcryptjs.hash(password, 10), // Hash the password
             graduationYear,
             linkedin,
             profilePhoto: imageURL,
@@ -71,7 +71,7 @@ const loginAlumni = async (req, res) => {
 
         if (!alumni) return res.status(400).json({ message: errorMessage, success: false });
 
-        const validPassword = await bcrypt.compare(password, alumni.password);
+        const validPassword = await bcryptjs.compare(password, alumni.password);
         if (!validPassword) return res.status(400).json({ message: errorMessage, success: false });
 
         // Check if the user is verified

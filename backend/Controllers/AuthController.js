@@ -1,5 +1,5 @@
 const User = require('../Models/users'); // Ensure you are importing User correctly
-const bcrypt = require('bcrypt');
+const bcryptjs = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { loginValidation } = require('../Middlewares/AuthValidation');
 const cloudinary = require('cloudinary').v2;
@@ -37,7 +37,7 @@ const signup = async (req, res) => {
         const userModel = new User({
             fullName,
             collegeEmail,
-            password: await bcrypt.hash(password, 10), // Hash the password
+            password: await bcryptjs.hash(password, 10), // Hash the password
             graduationYear,
             course,
             profilePhoto: imageURL,
@@ -72,7 +72,7 @@ const login = async (req, res) => {
         
         if (!user) return res.status(400).json({ message: errorMessage, success: false });
         
-        const validPassword = await bcrypt.compare(password, user.password);
+        const validPassword = await bcryptjs.compare(password, user.password);
         if (!validPassword) return res.status(400).json({ message: errorMessage, success: false });
 
         const jwtToken = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
