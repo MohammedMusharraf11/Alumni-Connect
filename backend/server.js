@@ -7,6 +7,7 @@ const AuthRouter = require('./Routes/AuthRouter');
 const AuthAlumniRouter = require('./Routes/AuthAlumniRoutes');
 const uploadRoute = require('./Routes/routeUpload');
 const connectCloudinary = require('./utils/cloudinary');
+const eventRouter = require('./Routes/eventRoutes');
 
 require('./Models/db');
 
@@ -25,6 +26,7 @@ app.use('/auth', AuthRouter);
 app.use('/api/alumni', AuthAlumniRouter)
 app.use('/api/student/upload' , uploadRoute);
 app.use('/api/alumni/upload' , uploadRoute);
+app.use('/api/events', eventRouter);
 
 app.listen(PORT, () => {
 console.log(`Server is running on port ${PORT}`);

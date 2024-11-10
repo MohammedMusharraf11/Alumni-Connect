@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 import { handleSuccess, handleError } from "../utils/utils"; // Import toast messages
 
 const ScheduleEvent = ({ onCancel }) => {
@@ -9,7 +10,7 @@ const ScheduleEvent = ({ onCancel }) => {
 
   const categories = ["Tech Talk", "Hackathon", "Workshop", "Networking", "Non-Tech Meetup"];
 
-  const handleSchedule = () => {
+  const handleSchedule = async () => {
     const currentDate = new Date();
     const selectedDate = new Date(dateTime);
 
@@ -24,13 +25,32 @@ const ScheduleEvent = ({ onCancel }) => {
       return;
     }
 
-    // If all checks pass, show success toast
-    handleSuccess("Event Scheduled Successfully");
-    onCancel(); // Close the form
+    // Event data to be sent in the POST request
+    const eventData = {
+      description: eventDescription,
+      link: eventLink,
+      dateTime,
+      category,
+    };
+
+    try {
+      // POST request to create a new event
+      const response = await axios.post("http://localhost:8080/api/events", eventData);
+
+      // Show success message and reset form if request is successful
+      handleSuccess("Event Scheduled Successfully");
+      setEventDescription("");
+      setEventLink("");
+      setDateTime("");
+      setCategory("");
+      onCancel(); // Close the form
+    } catch (error) {
+      handleError("Failed to schedule the event. Please try again.");
+    }
   };
 
   return (
-    <div className="bg-white p- rounded-lg shadow-lg p-4 m-4">
+    <div className="bg-white rounded-lg shadow-lg p-4 m-4">
       <textarea
         className="w-full p-2 mb-4 border border-gray-300 rounded-lg"
         placeholder="Event Description"

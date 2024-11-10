@@ -7,16 +7,16 @@ import ScheduleEventForm from "../components/ScheduleEvent";
 import HostMentorshipForm from "../components/HostMentorship";
 import JobOpeningsForm from "../components/JobOpenings";
 import { Search } from "lucide-react";
-import {assets} from "../assets/assets"; // Assuming assets is properly imported
+import { assets } from "../assets/assets";
 import Network from "../components/Network";
 import OpenSource from "../components/OpenSource";
 
 function Dashboard() {
   const [loggedInUser, setLoggedInUser] = useState("");
-  const[profilePhoto,setProfilePhoto] = useState("");
+  const [profilePhoto, setProfilePhoto] = useState("");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [activeCard, setActiveCard] = useState("");
-  const [activeSection, setActiveSection] = useState("dashboard"); // Track the active section
+  const [activeSection, setActiveSection] = useState("dashboard");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -25,7 +25,7 @@ function Dashboard() {
     if (user) {
       setLoggedInUser(user);
     }
-    if(photo){
+    if (photo) {
       setProfilePhoto(photo);
     }
   }, []);
@@ -56,9 +56,6 @@ function Dashboard() {
     }
     if (title === "Open Source") {
       setActiveSection("open-source");
-    }
-    if (title === "Network") {
-      setActiveSection("network");
     }
   };
 
@@ -95,9 +92,9 @@ function Dashboard() {
       case "events":
         return <EventsList />;
       case "network":
-        return <Network/>
+        return <Network />;
       case "open-source":
-        return <OpenSource/>
+        return <OpenSource />;
       default:
         return <div>Default content</div>;
     }
@@ -106,15 +103,10 @@ function Dashboard() {
   return (
     <div className="grid grid-cols-12 min-h-screen w-screen max-w-full bg-[#EDF0F7]">
       <div className="col-span-2 rounded-lg min-h-full">
-        {/* Pass activeSection and setActiveSection to Sidebar */}
-        <Sidebar
-          setActiveSection={setActiveSection}
-          activeSection={activeSection}
-        />
+        <Sidebar setActiveSection={setActiveSection} activeSection={activeSection} />
       </div>
 
       <div className="col-span-8 rounded-lg min-h-fit pt-4">
-        {/* Main Content */}
         <div className="flex justify-between items-center gap-8 px-4">
           <div className="flex flex-col justify-center">
             <h1 className="text-3xl font-outfit font-bold text-secondary">
@@ -132,23 +124,23 @@ function Dashboard() {
           </div>
         </div>
 
-        {/* Conditionally render the selected form */}
-        {activeCard === "Schedule an Event" &&  (
-          <ScheduleEventForm onCancel={handleCancelForm} />
-          
-        )}
-        {activeCard === "Host a Mentorship" && (
-          <HostMentorshipForm onCancel={handleCancelForm} />
-        )}
-        {activeCard === "Job Openings" && (
-          <JobOpeningsForm onCancel={handleCancelForm} />
-        )}
-
         {/* Render the main content based on active section */}
         {renderContent()}
+
+        {/* Conditionally render the selected form below the cards */}
+        <div className="mt-8 px-4">
+          {activeCard === "Schedule an Event" && (
+            <ScheduleEventForm onCancel={handleCancelForm} />
+          )}
+          {activeCard === "Host a Mentorship" && (
+            <HostMentorshipForm onCancel={handleCancelForm} />
+          )}
+          {activeCard === "Job Openings" && (
+            <JobOpeningsForm onCancel={handleCancelForm} />
+          )}
+        </div>
       </div>
 
-      {/* Right-side Profile Section */}
       <div className="col-span-2 flex justify-center px-4 pt-4 ">
         <div className="relative flex flex-col items-center">
           <button
@@ -156,9 +148,11 @@ function Dashboard() {
             className="flex items-center space-x-2 focus:outline-none"
           >
             <span className="font-outfit font-bold text-secondary">
-             <p className="text-primary underline" onClick={toggleDropdown}>Edit Profile</p>
+              <p className="text-primary underline" onClick={toggleDropdown}>
+                Edit Profile
+              </p>
             </span>
-            {profilePhoto ? ( // Use profile photo from state
+            {profilePhoto ? (
               <img
                 src={profilePhoto}
                 alt="Profile"
