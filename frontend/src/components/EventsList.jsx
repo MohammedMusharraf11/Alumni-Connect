@@ -1,9 +1,28 @@
-// components/AllEvents.jsx
-import React from "react";
-import { events } from "../utils/events"; // Import dummy event data
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 
 const EventsList = () => {
-  // console.log(events); // Add this to check if the events array has data
+  const [events, setEvents] = useState([]); // State to hold events data
+  const [loading, setLoading] = useState(true); // State to manage loading status
+  const [error, setError] = useState(null); // State to handle errors
+
+  useEffect(() => {
+    // Fetch events from backend API
+    const fetchEvents = async () => {
+      try {
+        const response = await axios.get("http://localhost:8080/api/events");
+        setEvents(response.data); // Update events state with fetched data
+        setLoading(false);
+      } catch (err) {
+        setError("Error fetching events. Please try again later.");
+        setLoading(false);
+      }
+    };
+    fetchEvents();
+  }, []);
+
+  if (loading) return <p>Loading events...</p>; // Show loading message while fetching
+  if (error) return <p className="text-red-500">{error}</p>; // Show error message if there’s an error
 
   return (
     <div className="bg-white p-4 rounded-lg shadow-lg m-4">
@@ -12,7 +31,7 @@ const EventsList = () => {
         <ul>
           {events.map((event) => (
             <li
-              key={event.id}
+              key={event._id}
               className="mb-4 border border-gray-300 rounded-lg p-4 hover:shadow-md transition-shadow"
             >
               <h3 className="text-xl font-semibold mb-2 text-secondary">{event.description}</h3>
