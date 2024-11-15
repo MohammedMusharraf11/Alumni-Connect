@@ -1,11 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { assets } from '../assets/assets';
 import { NavLink, useNavigate, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+
 
 function Navbar() {
   const navigate = useNavigate();
   const location = useLocation();
+  
+  useEffect(() => {
+    AOS.init({
+      duration: 1000, // Adjust the duration as needed
+      once: true,     // Only animate once on page load
+    });
+  }, []);
+
 
   const [dropDown, setDropDown] = useState(false);
 
@@ -16,7 +27,7 @@ function Navbar() {
   const hideButtons = hiddenButtonPaths.includes(location.pathname);
 
   return (
-    <div className='sticky top-0 bg-white z-50 flex items-center justify-between text-sm py-4 mb-5 border-b border-b-grey-400 font-outfit md:max-xl:mx-[-10%]'>
+    <div className='sticky top-0 bg-white z-50 flex items-center justify-between text-sm py-4 mb-5 border-b border-b-grey-400 font-outfit md:max-xl:mx-[-10%]' data-aos="fade-down">
       <NavLink to={'/'}>
       <img className='w-44 cursor-pointer' src={assets.Logo} alt="" />
       </NavLink>

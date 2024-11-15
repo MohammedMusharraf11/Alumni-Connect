@@ -4,7 +4,7 @@ import {useNavigate } from 'react-router-dom'
 function Features() {
   const navigate = useNavigate()
   return (
-    <div className="container mx-auto py-16 font-outfit">
+    <div className="container mx-auto py-16 font-outfit" data-aos="fade-right" data-aos-duration="700">
       <h1 className="text-3xl font-bold text-center mb-8 text-secondary">Our Features</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
         <div className="flex flex-col items-center justify-center p-6 bg-custom-blue hover:bg-[#cae0ff] transition-all duration-300 rounded-lg ">
