@@ -109,7 +109,7 @@ function Dashboard() {
       <div className="col-span-8 rounded-lg min-h-fit pt-4">
         <div className="flex justify-between items-center gap-8 px-4">
           <div className="flex flex-col justify-center">
-            <h1 className="text-3xl font-outfit font-bold text-secondary">
+            <h1 className="text-3xl font-outfit font-bold text-secondary typewriter">
               Welcome, {loggedInUser}
             </h1>
             <p className="text-[#023074cd]">{currentDate}</p>

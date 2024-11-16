@@ -15,7 +15,7 @@ import Features from './components/Features'
 
 function App() {
   return (
-    <div className='font-outfit'>
+    <div className='font-outfit overflow-hidden'>
       <ToastContainer />
       <Routes>
         <Route path='/' element={<Layout />}>

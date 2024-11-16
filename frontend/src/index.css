@@ -2,6 +2,71 @@
 @tailwind components;
 @tailwind utilities;
 
-.active hr{
-  @apply block
+/* Active class hr styles */
+.active hr {
+  @apply block;
+  @apply bg-primary h-0.5 w-3/5 mx-auto mt-2;
 }
+
+/* AOS fade-right animation styles */
+[data-aos="fade-right"] {
+  opacity: 0; 
+  transform: translateX(50%);
+  transition: opacity 0.6s ease-in-out, transform 0.6s ease-in-out;
+}
+
+[data-aos="fade-right"].aos-animate {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* AOS fade-left animation styles */
+[data-aos="fade-left"] {
+  opacity: 0; 
+  transform: translateX(-50%);
+  transition: opacity 0.6s ease-in-out, transform 0.6s ease-in-out;
+}
+
+[data-aos="fade-left"].aos-animate {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* AOS zoom-in animation styles */
+[data-aos="zoom-in"] {
+  opacity: 0;
+  transform: scale(0.8);
+  transition: opacity 0.6s ease-in-out, transform 0.6s ease-in-out;
+}
+
+[data-aos="zoom-in"].aos-animate {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.typewriter {
+  display: inline-block;
+  overflow: hidden;
+  border-right: 0.15em solid #022f74; /* Adjust color of the cursor */
+  white-space: nowrap;
+  letter-spacing: 0.05em; /* Reduced the spacing between characters */
+  animation: typing 2s steps(20) 1 normal, blink 0.75s step-end 2s normal forwards;
+}
+
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes blink {
+  50% {
+    border-color: transparent;
+  }
+}
+
+
+
