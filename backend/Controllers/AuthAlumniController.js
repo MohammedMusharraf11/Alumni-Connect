@@ -1,26 +1,27 @@
-const Alumni = require('../Models/alumni'); // Ensure you are importing the Alumni model correctly
+const Alumni = require('../Models/alumni'); // Alumni model
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { validationResult } = require("express-validator");
 const cloudinary = require('cloudinary').v2;
-// Signup function for alumni
+const { validationResult } = require("express-validator");
+
+// Signup Function
 const signupAlumni = async (req, res) => {
     try {
         // Destructure the required fields from the request body
-        const { fullName, collegeEmail, password, confirmPassword, graduationYear, linkedin } = req.body;
-        const  profilePhoto  = req.file;
-        console.log({fullName, collegeEmail, password, confirmPassword, graduationYear, linkedin}, profilePhoto);
+        const { fullName, collegeEmail, password, confirmPassword, graduationYear, linkedin ,degreeCertificate } = req.body;
+        const profilePhoto = req.file; // Expecting `req.file` to contain uploaded file details
 
-        
+        console.log({ fullName, collegeEmail, password, confirmPassword, graduationYear, linkedin,degreeCertificate }, profilePhoto);
+
         // Check if an alumni with the given college email already exists
-        const alumni = await Alumni.findOne({ collegeEmail });
-        if (alumni) {
+        const existingAlumni = await Alumni.findOne({ collegeEmail });
+        if (existingAlumni) {
             return res.status(409).json({
                 message: 'Alumni already exists, you can log in',
                 success: false
             });
         }
-        
+
         // Ensure passwords match
         if (password !== confirmPassword) {
             return res.status(400).json({
@@ -29,32 +30,36 @@ const signupAlumni = async (req, res) => {
             });
         }
 
-        console.log("Uploaded File:", profilePhoto);
-        // Upload Image to Cloudinary
-        const result = await cloudinary.uploader.upload(profilePhoto.path, { resource_type: 'image' });
-        const imageURL = result.secure_url;
-        // Create a new alumni model instance
-        const alumniModel = new Alumni({
+        // Upload profile photo to Cloudinary
+        const photoUpload = await cloudinary.uploader.upload(profilePhoto.path, { resource_type: 'image' });
+        const profilePhotoURL = photoUpload.secure_url;
+
+        
+
+        // Create a new alumni instance
+        const alumni = new Alumni({
             fullName,
             collegeEmail,
             password: await bcrypt.hash(password, 10), // Hash the password
             graduationYear,
             linkedin,
-            profilePhoto: imageURL,
-            verified: false, // Initially set to false when an alumni registers
-            role: 'alumni', // Assign role as 'alumni'
+            profilePhoto: profilePhotoURL,
+            degreeCertificate,
+            verified: false, // Mark as unverified initially
+            role: 'alumni'
         });
 
-        // Save the new alumni to the database
-        await alumniModel.save();
+        // Save the alumni to the database
+        await alumni.save();
 
         // Respond with success message
         res.status(201).json({
             message: "Signup successful, awaiting verification",
+            _id: alumni._id,
             success: true
         });
     } catch (err) {
-        console.error(err); // Log any errors for debugging
+        console.error(err); // Log errors for debugging
         res.status(500).json({
             message: "Internal server error",
             success: false
@@ -62,30 +67,56 @@ const signupAlumni = async (req, res) => {
     }
 };
 
-// Login function for alumni
+// Login Function
 const loginAlumni = async (req, res) => {
     try {
         const { collegeEmail, password } = req.body;
-        const alumni = await Alumni.findOne({ collegeEmail }); // Use 'Alumni' instead of 'User'
-        const errorMessage = 'Invalid email or password';
 
-        if (!alumni) return res.status(400).json({ message: errorMessage, success: false });
-
-        const validPassword = await bcrypt.compare(password, alumni.password);
-        if (!validPassword) return res.status(400).json({ message: errorMessage, success: false });
-
-        // Check if the user is verified
-        if (!alumni.verified) {
-            return res.status(403).json({ message: 'Account not verified. Please Ask Admin to verify.', success: false });
+        // Check if the alumni exists
+        const alumni = await Alumni.findOne({ collegeEmail });
+        if (!alumni) {
+            return res.status(400).json({
+                message: 'Invalid email or password',
+                success: false
+            });
         }
 
-        const jwtToken = jwt.sign({ userId: alumni._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-        res.status(200).json({ message: 'Login successful', token: jwtToken, success: true, fullname: alumni.fullName, profilePhoto: alumni.profilePhoto });
+        // Verify password
+        const validPassword = await bcrypt.compare(password, alumni.password);
+        if (!validPassword) {
+            return res.status(400).json({
+                message: 'Invalid email or password',
+                success: false
+            });
+        }
 
-    } catch (error) {
-        return res.status(500).json({ message: error.message });
+        // Check verification status
+        if (!alumni.verified) {
+            return res.status(403).json({
+                message: 'Account not verified. Please ask Admin to verify your account.',
+                success: false
+            });
+        }
+
+        // Generate JWT token
+        const token = jwt.sign({ userId: alumni._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+
+        // Respond with token and alumni details
+        res.status(200).json({
+            message: 'Login successful',
+            success: true,
+            fullname: alumni.fullName,
+            token,
+            profilePhoto: alumni.profilePhoto,
+            _id: alumni._id
+        });
+    } catch (err) {
+        console.error(err); // Log errors for debugging
+        res.status(500).json({
+            message: "Internal server error",
+            success: false
+        });
     }
 };
-
 
 module.exports = { signupAlumni, loginAlumni };

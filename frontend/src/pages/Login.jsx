@@ -3,7 +3,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import { handleError, handleSuccess } from '../utils/utils'; // Import your utility functions
 import { ToastContainer } from 'react-toastify';
 
-
 function Login() {
     const [loginInfo, setLoginInfo] = useState({
         collegeEmail: '',
@@ -31,7 +30,7 @@ function Login() {
             handleError('Please fill all the fields');
             return;
         }
-        
+
         // Determine the API endpoint based on user type
         const url = userType === 'alumni'
             ? 'http://localhost:8080/api/alumni/login' // Alumni login endpoint
@@ -46,25 +45,30 @@ function Login() {
                 body: JSON.stringify(loginInfo),
             });
             const result = await response.json();
-            const { success, message, token, error, fullname, profilePhoto} = result;
-            console.log(result);
+            const { success, message, token, fullname, profilePhoto, _id } = result;
+
             if (success) {
                 handleSuccess(message);
+
+                // Store the token and user information
                 localStorage.setItem('token', token);
                 localStorage.setItem('profilePhoto', profilePhoto);
                 localStorage.setItem('loggedInUser', fullname);
+                localStorage.setItem('userId', _id); // Store userId properly
+
                 setTimeout(() => {
                     navigate('/dashboard');
                 }, 1000);
-            } else if (error) {
-                const details = error?.details[0]?.message || message; // Display error message
-                handleError(details);
-            } else if (!success) {
-                handleError(message);
+            } else {
+                handleError(message || 'Login failed');
             }
         } catch (error) {
             handleError(error.message);
         }
+    };
+
+    const handleAdminRedirect = () => {
+        navigate('/admin'); // Navigate to the Admin Panel
     };
 
     return (
@@ -100,7 +104,7 @@ function Login() {
                         <div className="flex flex-col mb-4">
                             <label htmlFor="collegeEmail" className="text-gray-600 mb-2">Email</label>
                             <input
-                                type="text" // Changed from 'collegeEmail' to 'text'
+                                type="text"
                                 id="collegeEmail"
                                 name="collegeEmail"
                                 value={loginInfo.collegeEmail}
@@ -131,6 +135,16 @@ function Login() {
                         <Link to="/roleselection" className="text-blue-500 hover:underline">
                             Register Here
                         </Link>
+                    </p>
+                    <br />
+                    <p className="text-gray-700 text-center">
+                        Admin?{' '}
+                        <span
+                            onClick={handleAdminRedirect}
+                            className="text-blue-500 cursor-pointer hover:underline"
+                        >
+                            Go to Admin Panel
+                        </span>
                     </p>
                 </div>
                 <ToastContainer />

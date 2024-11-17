@@ -10,12 +10,15 @@ import { Search } from "lucide-react";
 import { assets } from "../assets/assets";
 import Network from "../components/Network";
 import OpenSource from "../components/OpenSource";
+import Messages from "../components/Message";
+import EditProfilePopup from "../components/EditProfilePopup";
 
 function Dashboard() {
   const [loggedInUser, setLoggedInUser] = useState("");
   const [profilePhoto, setProfilePhoto] = useState("");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [activeCard, setActiveCard] = useState("");
+  const [isEditProfileOpen, setIsEditProfileOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("dashboard");
   const navigate = useNavigate();
 
@@ -95,6 +98,8 @@ function Dashboard() {
         return <Network />;
       case "open-source":
         return <OpenSource />;
+      case "messages":
+        return <Messages loggedInUser={loggedInUser} />;
       default:
         return <div>Default content</div>;
     }
@@ -170,7 +175,7 @@ function Dashboard() {
             <div className="absolute right-0 mt-10 w-46 bg-white bg-opacity-25 rounded-md shadow-lg z-20">
               <button
                 className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
-                onClick={() => navigate("/update-profile")}
+                onClick={() => setIsEditProfileOpen(true)}
               >
                 Update Profile
               </button>
@@ -184,6 +189,9 @@ function Dashboard() {
           )}
         </div>
       </div>
+
+      {/* Render the EditProfilePopup if open */}
+      {isEditProfileOpen && <EditProfilePopup onClose={() => setIsEditProfileOpen(false)} />}
     </div>
   );
 }

@@ -2,7 +2,6 @@
   "name": "backend",
   "version": "1.0.0",
   "main": "index.js",
-
   "scripts": {
     "start": "nodemon server.js"
   },
@@ -20,6 +19,7 @@
     "joi": "^17.13.3",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.7.1",
-    "nodemon": "^3.1.7"
+    "nodemon": "^3.1.7",
+    "socket.io": "^4.8.1"
   }
 }

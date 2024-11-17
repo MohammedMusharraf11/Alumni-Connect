@@ -31,7 +31,9 @@ const alumniSchema = new Schema({
         trim: true,
     },
     degreeCertificate: {
-        type: String, // Stores the file path or URL of the uploaded certificate
+        type: String,
+        required:true,
+         // Stores the file path or URL of the uploaded certificate
     },
     profilePhoto: {
         type: String, // Stores the file path or URL of the uploaded profile photo
