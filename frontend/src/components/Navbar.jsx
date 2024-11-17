@@ -18,7 +18,7 @@ function Navbar() {
 
   const [dropDown, setDropDown] = useState(false);
 
-  const hiddenButtonPaths = ['/student-register', '/roleselection', '/login', '/alumni-register'];
+  const hiddenButtonPaths = ['/student-register', '/roleselection', '/login', '/alumni-register','/admin'];
   const hideButtons = hiddenButtonPaths.includes(location.pathname);
 
   return (

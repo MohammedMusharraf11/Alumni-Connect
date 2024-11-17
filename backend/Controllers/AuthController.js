@@ -53,6 +53,7 @@ const signup = async (req, res) => {
         // Respond with success message
         res.status(201).json({
             message: "Signup successful",
+            _id: userModel._id,
             success: true
         });
     } catch (err) {
@@ -76,11 +77,25 @@ const login = async (req, res) => {
         if (!validPassword) return res.status(400).json({ message: errorMessage, success: false });
 
         const jwtToken = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-        res.status(200).json({ message: 'Login successful', token: jwtToken, success: true, fullname: user.fullName, profilePhoto: user.profilePhoto });
+        
+        // Send the token in the response header
+        res.setHeader('Authorization', `Bearer ${jwtToken}`);
+
+        // Send a response body (optional) with user details
+        res.status(200).json({
+            message: 'Login successful',
+            success: true,
+            fullname: user.fullName,
+            token: jwtToken,
+            profilePhoto: user.profilePhoto,
+            _id: user._id, // Ensure _id is included here
+          });
+          
 
     } catch (error) {
         return res.status(500).json({ message: error.message });
     }
 };
+
 
 module.exports = { signup, login };
